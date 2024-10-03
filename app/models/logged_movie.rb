@@ -1,0 +1,2 @@
+class LoggedMovie < ApplicationRecord
+end

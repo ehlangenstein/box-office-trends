@@ -18,3 +18,8 @@ group :development do
   gem "web-console"
 end
 
+
+#TMDB API
+gem 'themoviedb-api'
+
+gem 'dotenv-rails', '~> 3.1', '>= 3.1.4'
