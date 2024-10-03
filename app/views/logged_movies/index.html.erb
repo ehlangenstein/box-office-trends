@@ -1,0 +1,55 @@
+<h1> Logged Movies </h1>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Release Date</th>
+      <th>Director</th>
+      <th>Budget</th>
+      <th>Revenue</th>
+      <%# <th>Production Companies</th> %> <%#need to figure out this functionality for looping through multiple prodcos%>
+      <th>Domestic Distributer</th>
+      <th>International Distributer</th>
+      <th>Opening Weekend Start Date</th>
+      <th>Opening Weekend End Date</th>
+      <th>Opening Weekend Box Office</th>
+      <th>Domestic Box Office</th>
+      <th>International Box Office</th>
+      <th>Total Box Office</th>
+      <th># Theaters Opening Weekend</th>
+      <th>RT Critics Score</th>
+      <th>RT Audience Score</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%for movie in @logged_movies%>
+      <tr>
+        <td> <%= movie["title"] %> </td>
+        <td> <%= movie["primary_genre"] %> </td> <%# eventually, loop through genres table and find Name %>
+        <td> <%= movie["release_date"].strftime("%B %d, %Y") if movie["release_date"] %> </td> <%#prob needs formatting%>
+        <td> <%= movie["director"] %> </td> <%# eventually, loop through genres table and find Name %>
+        <td> <%= number_to_currency(movie["budget"], precision: 0) if movie["budget"] %> </td> <%# number formatting?%>
+        <td> <%= number_to_currency(movie["revenue"], precision: 0) if movie["revenue"] %> </td> <%#might delete if redundant%>
+        <td> <%= movie["domestic_distrib"] %> </td>
+        <td> <%= movie["intl_distrib"] %> </td>
+        <td> <%= movie["open_startDate"].strftime("%B %d, %Y") if movie["open_startDate"] %> </td>
+        <td> <%= movie["open_endDate"].strftime("%B %d, %Y") if movie["open_endDate"] %> </td>
+        <td> <%= number_to_currency(movie["open_wknd_BO"], precision: 0) if movie["open_wknd_BO"] %> </td>
+        <td> <%= number_to_currency(movie["domestic_BO"], precision: 0) if movie["domestic_BO"] %> </td>
+        <td> <%= number_to_currency(movie["intl_BO"], precision: 0) if movie["intl_BO"] %> </td>
+        <td> <%= number_to_currency(movie["total_BO"], precision: 0) if movie["total_BO"] %> </td>
+        <td> <%= number_with_delimiter(movie["open_wknd_theaters"]) if movie["open_wknd_theaters"] %> </td>
+        <td> <%= number_to_percentage(movie["RT_critic"] * 100, precision: 0) if movie["RT_critic"] %> </td>
+        <td> <%= number_to_percentage(movie["RT_audience"] * 100, precision: 0) if movie["RT_audience"] %> </td>
+
+      </tr>
+    <%end%>
+  </tbody>
+
+
+
+</table>

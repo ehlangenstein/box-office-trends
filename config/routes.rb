@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   # Resources
   resources "sessions"
   resources "users"
+  resources "dice"
+  resources "home" #home page of app
+  resources "trends" #tab for data analysis
+  resources "logged_movies" #tab for table of logged movies
+
+  resources "movies" #view for individual movie data
+  
   
   # Login/logout
   get("/login", { :controller => "sessions", :action => "new" })
