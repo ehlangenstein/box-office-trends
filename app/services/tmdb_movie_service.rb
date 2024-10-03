@@ -60,16 +60,6 @@ class TmdbMovieService
         m.revenue = movie_data["revenue"]
       end
 
-      # Now handle the movie_genres entries
-      movie_data["genres"].each do |genre_data|
-        genre = Genre.find_or_create_by(genre_id: genre_data["id"], name: genre_data["name"])
-        movie_genre = MovieGenre.create(tmdb_id: movie.tmdb_id, genre: genre)
-        if movie_genre.save
-          Rails.logger.info "Created MovieGenre for movie #{movie.title} and genre #{genre.name}"
-        else
-          Rails.logger.error "Failed to create MovieGenre for movie #{movie.title} and genre #{genre.name}: #{movie_genre.errors.full_messages.join(', ')}"
-        end
-      end
     else
       Rails.logger.error "Failed to fetch movie details for TMDB ID #{movie_id}."
     end
