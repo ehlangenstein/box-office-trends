@@ -1,0 +1,2 @@
+class FestivalWinner < ApplicationRecord
+end
