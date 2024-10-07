@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_03_223757) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_07_202854) do
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "logo_path"
   end
 
   create_table "festival_awards", force: :cascade do |t|

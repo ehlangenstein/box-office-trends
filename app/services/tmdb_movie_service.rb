@@ -63,11 +63,12 @@ class TmdbMovieService
 
       #ensure movie is created
       if movie.persisted?
-        Rails.logger.info "Movie #{movie.title} successfully created or found"
+        Rails.logger.info! "Movie #{movie.title} successfully created or found"
 
         #call genre service and log call
         Rails.logger.info "calling TMDB Movie Genre service for movie ID : #{movie.tmdb_id}"
-        TmdbMovieGenreService.fetch_and_store_movie_genres(movie.tmdb_id)
+        TmdbMovieGenreService.fetch_and_store_movie_genres!(movie.tmdb_id)
+        TmdbProdCoService.fetch_and_store_production_companies!(movie.tmdb_id)
       else
         Rails.logger.error "failed to create or find movie with tmdb id #{movie_id}"
       end

@@ -1,0 +1,27 @@
+<h1>Company List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company ID</th>
+      <th>Company Name</th>
+      <th>Logo Path</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.company_id %></td>
+        <td><%= company.company_name %></td>
+        <td>
+          <% if company.logo_path.present? %>
+            <img src="<%= company.logo_path %>" alt="<%= company.company_name %> logo" width="100">
+          <% else %>
+            No logo available
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

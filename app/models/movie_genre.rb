@@ -1,6 +1,6 @@
 class MovieGenre < ApplicationRecord
   belongs_to :movie, foreign_key: 'tmdb_id', primary_key: 'tmdb_id'
-  belongs_to :genre
+  belongs_to :genre, foreign_key: 'genre_id'
 
    # Ensure that only one genre per movie can be marked as primary
    validate :only_one_primary_genre_per_movie
