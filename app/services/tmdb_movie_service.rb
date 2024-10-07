@@ -58,10 +58,21 @@ class TmdbMovieService
         m.imdb_id = movie_data["imdb_id"]
         m.release_date = movie_data["release_date"]
         m.revenue = movie_data["revenue"]
+        
       end
 
+      #ensure movie is created
+      if movie.persisted?
+        Rails.logger.info "Movie #{movie.title} successfully created or found"
+
+        #call genre service and log call
+        Rails.logger.info "calling TMDB Movie Genre service for movie ID : #{movie.tmdb_id}"
+        TmdbMovieGenreService.fetch_and_store_movie_genres(movie.tmdb_id)
+      else
+        Rails.logger.error "failed to create or find movie with tmdb id #{movie_id}"
+      end
     else
-      Rails.logger.error "Failed to fetch movie details for TMDB ID #{movie_id}."
+        Rails.logger.error "Failed to fetch movie details for TMDB ID #{movie_id}."
     end
   end
 end

@@ -27,10 +27,19 @@ class TmdbMovieGenreService
       # Loop through each genre and create movie_genre associations
       movie_data["genres"].each do |genre_data|
         genre = Genre.find_or_create_by(genre_id: genre_data["id"], name: genre_data["name"])
-        MovieGenre.find_or_create_by(tmdb_id: movie.tmdb_id, genre_id: genre.genre_id) do |movie_genre|
-          movie_genre.primary = false # Adjust this logic as needed
-          movie_genre.genre_name = genre.name
-        end
+
+        #Ensure no duplicates created by using find_or_create_by
+        movie_genre = MovieGenre.find_or_create_by(tmdb_id: movie.tmdb_id, genre_id: genre.genre_id) 
+
+        #update genre_name field and make sure primary is false 
+        movie_genre.update(genre_name: genre.name, primary:false)
+
+        if movie_genre.save 
+          Rails.logger.info "MovieGenre created for movie #{movie.title} and genre #{genre.name}"
+        else 
+          Rails.logger.error "Failed to create MovieGenre for #{movie.title}: #{movie_genre.errors.full_messages.join(', ')}"
+        end 
+        
       end
 
       Rails.logger.info "Genres for movie #{movie.title} successfully updated."

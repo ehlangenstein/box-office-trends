@@ -29,7 +29,13 @@
     <%for movie in @logged_movies%>
       <tr>
         <td> <%= movie["title"] %> </td>
-        <td> <%= movie["primary_genre"] %> </td> <%# eventually, loop through genres table and find Name %>
+
+        <%#Look up genre name using primary_genre id%>
+        <td>
+          <% genre = Genre.find_by(genre_id: movie.primary_genre)%>
+          <%= genre.name if genre %>
+        </td>
+        
         <td> <%= movie["release_date"].strftime("%B %d, %Y") if movie["release_date"] %> </td> <%#prob needs formatting%>
         <td> <%= movie["director"] %> </td> <%# eventually, loop through genres table and find Name %>
         <td> <%= number_to_currency(movie["budget"], precision: 0) if movie["budget"] %> </td> <%# number formatting?%>
