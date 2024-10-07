@@ -1,0 +1,23 @@
+<h1><%= @company.company_name %></h1>
+
+<!-- Display the company logo if available -->
+<% if @company.logo_path.present? %>
+  <%= image_tag "https://image.tmdb.org/t/p/w185#{@company.logo_path}", alt: @company.company_name %>
+<% else %>
+  <p>No logo available</p>
+<% end %>
+
+<!-- Display movies associated with this company -->
+<h2>Movies produced by <%= @company.company_name %>:</h2>
+
+<% if @movies.any? %>
+  <ul>
+    <% @movies.each do |movie| %>
+      <li>
+        <%= link_to movie.title, movie_path(movie) %> <!-- Assuming you have a movie show page -->
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies found for this company.</p>
+<% end %>

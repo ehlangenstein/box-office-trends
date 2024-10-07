@@ -13,7 +13,8 @@
     <% @companies.each do |company| %>
       <tr>
         <td><%= company.company_id %></td>
-        <td><%= company.company_name %></td>
+        <td>
+          <%= link_to company.company_name, company_path(company) %></td>
         <td>
           <% if company.logo_path.present? %>
             <img src="<%= company.logo_path %>" alt="<%= company.company_name %> logo" width="100">

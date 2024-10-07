@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources "movie_genres"
 
   resources "movies" #view for individual movie data
-  resources "companies"
+  resources "companies" 
   
   # Login/logout
   get("/login", { :controller => "sessions", :action => "new" })

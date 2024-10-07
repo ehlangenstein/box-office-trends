@@ -19,7 +19,14 @@
         <%= @user["real_name"] %> | <a href="/logout">Logout</a>
       <% end %>
     </p>
-
+    <p>
+    <!-- Navigation Bar with Buttons -->
+    <nav class="nav-buttons">
+      <%= link_to "Logged Movies", "/logged_movies", class: "nav-button" %>
+      <%= link_to "Companies","/companies",class: "nav-button"%>
+      <%= link_to "Trends","/trends", class: "nav-button"%>
+    </nav>
+    </p>
     <p>
       <%= flash["notice"] %>
     </p>
