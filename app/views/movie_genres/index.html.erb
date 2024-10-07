@@ -1,0 +1,25 @@
+
+<h1>Movie Genres</h1>
+
+<table>
+<thead>
+    <tr>
+      <th>Movie Title</th>
+      <th>Genre </th>
+      <th>Primary Genre?</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%for movie_genre in @movie_genres%>
+    <tr>
+      <td> <%=movie_genre.movie.title%> </td>
+      <td> <%=movie_genre.genre_name%> </td>
+      <td> <%=movie_genre.primary%> </td>
+    </tr>
+  <% end %>
+
+
+  </tbody>
+
+</table>

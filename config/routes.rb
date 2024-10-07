@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources "home" #home page of app
   resources "trends" #tab for data analysis
   resources "logged_movies" #tab for table of logged movies
+  resources "movie_genres"
 
   resources "movies" #view for individual movie data
   

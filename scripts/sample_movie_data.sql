@@ -1,16 +1,19 @@
 --Strainge darling 
 UPDATE movies
 SET primary_genre = 27,
-    open_startDate ='2024-08-23',
-    open_endDate ='2024-08-25',
-  open_wknd_theaters = 1135,
-open_wknd_BO = 1142928,
+ open_startDate ='2024-08-23',
+ open_endDate ='2024-08-25',
+ open_wknd_theaters = 1135,
+ open_wknd_BO = 1142928,
  domestic_BO = 3081296,
  intl_BO = 440250,
- total_BO = domestic_BO + intl_BO,
  RT_audience = .85,
  RT_critic = .95
 WHERE tmdb_id = 1029281;
+
+UPDATE movies
+SET total_BO = domestic_BO + intl_BO
+WHERE tmdb_id = 1029281; 
 
 --The Substance
 UPDATE movies
@@ -21,10 +24,13 @@ SET primary_genre = 27,
  open_wknd_BO =3205212,
  domestic_BO =7116244,
  intl_BO = 5203897,
- total_BO = domestic_BO + intl_BO,
  RT_audience = .71,
  RT_critic = .91
 WHERE tmdb_id = 933260;
+
+UPDATE movies
+SET total_BO = domestic_BO + intl_BO
+WHERE tmdb_id = 933260; 
 
 --My Old Ass
 UPDATE movies
@@ -35,9 +41,12 @@ SET primary_genre = 35,
  open_wknd_BO =167853,
  domestic_BO =3269361,
  intl_BO = 89384,
- total_BO = domestic_BO + intl_BO,
  RT_audience = .91,
  RT_critic = .92
+WHERE tmdb_id = 947891;
+
+UPDATE movies
+SET total_BO = domestic_BO + intl_BO
 WHERE tmdb_id = 947891;
 
 --Blink Twice
@@ -49,7 +58,10 @@ SET primary_genre = 53,
  open_wknd_BO =7301894,
  domestic_BO =23070922,
  intl_BO = 23300000,
- total_BO = domestic_BO + intl_BO,
  RT_audience = .7,
  RT_critic = .74
+WHERE tmdb_id = 840705;
+
+UPDATE movies
+SET total_BO = domestic_BO + intl_BO
 WHERE tmdb_id = 840705;
