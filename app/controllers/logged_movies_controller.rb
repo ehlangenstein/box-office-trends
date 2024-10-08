@@ -4,12 +4,12 @@ class LoggedMoviesController < ApplicationController
   end
 
   def edit 
-    @movie = Movie.find_by(tmdb_id: params[:id])
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
 
   end 
 
   def update
-    @movie = Movie.find_by(tmdb_id: params[:id])
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
     if @movie.update(movie_params)
       flash[:notice] = "Movie updated successfully!"
       redirect_to logged_movies_path
@@ -38,5 +38,5 @@ class LoggedMoviesController < ApplicationController
   end
 
 end
-# do i need add the tmdb_movie_service function?
+
 

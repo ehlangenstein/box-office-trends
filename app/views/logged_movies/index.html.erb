@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>TMDB ID</th>
       <th>Genre</th>
       <th>Release Date</th>
       <th>Director</th>
@@ -30,6 +31,7 @@
     <%for movie in @logged_movies%>
       <tr>
         <td> <%= movie["title"] %> </td>
+        <td> <%= movie["tmdb_id"]%> </td>
 
         <%#Look up genre name using primary_genre id%>
         <td>
@@ -52,7 +54,7 @@
         <td> <%= number_with_delimiter(movie["open_wknd_theaters"]) if movie["open_wknd_theaters"] %> </td>
         <td> <%= number_to_percentage(movie["RT_critic"] * 100, precision: 0) if movie["RT_critic"] %> </td>
         <td> <%= number_to_percentage(movie["RT_audience"] * 100, precision: 0) if movie["RT_audience"] %> </td>
-        <td><%= link_to "Edit", edit_logged_movie_path(movie.tmdb_id), class: "edit-button" %></td>
+        <%#<td>  <%= link_to 'Edit', edit_logged_movie_path(tmdb_id: movie.tmdb_id), class: 'btn btn-primary' %> <%#</td> %>
       </tr>
     <%end%>
   </tbody>
