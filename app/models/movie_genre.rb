@@ -2,13 +2,15 @@ class MovieGenre < ApplicationRecord
   belongs_to :movie, foreign_key: 'tmdb_id', primary_key: 'tmdb_id'
   belongs_to :genre, foreign_key: 'genre_id'
 
-   # Ensure that only one genre per movie can be marked as primary
-   validate :only_one_primary_genre_per_movie
-   private
+  # Callback to update the primary_genre in the movies table
+  after_update :update_primary_genre_in_movie, if: :is_primary_changed?
 
-   def only_one_primary_genre_per_movie
-     if primary && movie.movie_genres.where(primary: true).exists?
-       errors.add(:primary, "There can only be one primary genre per movie.")
-     end
-   end
+  private
+
+  def update_primary_genre_in_movie
+    if is_primary == true
+      movie.update(primary_genre: genre_id)
+    end
+  end
+
 end

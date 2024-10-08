@@ -4,7 +4,6 @@
 <% if @company.logo_path.present? %>
   <%= image_tag "https://image.tmdb.org/t/p/w185#{@company.logo_path}", alt: @company.company_name %>
 <% else %>
-  <p>No logo available</p>
 <% end %>
 
 <!-- Display movies associated with this company -->

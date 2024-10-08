@@ -7,7 +7,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="/stylesheets/application.css">
+    <%= stylesheet_link_tag '/stylesheets/application.css', media: 'all' %>
+    <%= stylesheet_link_tag '/stylesheets/logged_movies_table.css', media: 'all' %>
   </head>
 
   <body>
@@ -25,6 +26,7 @@
       <%= link_to "Logged Movies", "/logged_movies", class: "nav-button" %>
       <%= link_to "Companies","/companies",class: "nav-button"%>
       <%= link_to "Trends","/trends", class: "nav-button"%>
+      <%= link_to "Movie Genres","/movie_genres", class: "nav-button"%>
     </nav>
     </p>
     <p>

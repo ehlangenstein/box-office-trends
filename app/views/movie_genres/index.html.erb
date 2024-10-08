@@ -7,6 +7,7 @@
       <th>Movie Title</th>
       <th>Genre </th>
       <th>Primary Genre?</th>
+       <th>Actions</th>
     </tr>
   </thead>
 
@@ -15,7 +16,16 @@
     <tr>
       <td> <%=movie_genre.movie.title%> </td>
       <td> <%=movie_genre.genre_name%> </td>
-      <td> <%=movie_genre.primary%> </td>
+      <td> 
+        <%=movie_genre.is_primary ? 'Yes' : 'No'%> 
+      </td>
+      <td>
+          <!-- Create a form to toggle the is_primary field -->
+          <%= form_with model: movie_genre, local: true, method: :patch do |f| %>
+            <%= f.hidden_field :is_primary, value: !movie_genre.is_primary %> <!-- Toggle value -->
+            <%= f.submit movie_genre.is_primary ? 'Unset Primary' : 'Set Primary', class: "btn btn-primary" %>
+          <% end %>
+        </td>
     </tr>
   <% end %>
 

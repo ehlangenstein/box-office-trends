@@ -1,6 +1,6 @@
 <h1> Logged Movies </h1>
 
-<table>
+<table class="logged_movies_table">
 
   <thead>
     <tr>
@@ -22,6 +22,7 @@
       <th># Theaters Opening Weekend</th>
       <th>RT Critics Score</th>
       <th>RT Audience Score</th>
+      <th>Edit</th>
     </tr>
   </thead>
 
@@ -51,7 +52,7 @@
         <td> <%= number_with_delimiter(movie["open_wknd_theaters"]) if movie["open_wknd_theaters"] %> </td>
         <td> <%= number_to_percentage(movie["RT_critic"] * 100, precision: 0) if movie["RT_critic"] %> </td>
         <td> <%= number_to_percentage(movie["RT_audience"] * 100, precision: 0) if movie["RT_audience"] %> </td>
-
+        <td><%= link_to "Edit", edit_logged_movie_path(movie.tmdb_id), class: "edit-button" %></td>
       </tr>
     <%end%>
   </tbody>

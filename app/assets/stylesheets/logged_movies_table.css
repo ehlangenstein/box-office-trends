@@ -1,0 +1,64 @@
+/* Custom Styles for Logged Movies Table */
+.logged-movies-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.logged-movies-table th,
+.logged-movies-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.logged-movies-table th {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+}
+
+.logged-movies-table td {
+  text-align: center;
+}
+
+.logged-movies-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.logged-movies-table tr:hover {
+  background-color: #ddd;
+}
+
+.logged-movies-table td.currency {
+  text-align: right;
+}
+
+.logged-movies-table th,
+.logged-movies-table td {
+  padding: 12px;
+}
+
+.logged-movies-table th {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+
+.edit-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}

@@ -1,0 +1,64 @@
+<h1>Edit Movie: <%= @movie.title %></h1>
+
+<%= form_with(model: @movie, url: logged_movie_path(@movie.tmdb_id), method: :patch) do |f| %>
+
+  <div class="field">
+    <%= f.label :domestic_distrib, "Domestic Distributor" %>
+    <%= f.text_field :domestic_distrib %>
+  </div>
+
+  <div class="field">
+    <%= f.label :intl_distrib, "International Distributor" %>
+    <%= f.text_field :intl_distrib %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_startDate, "Opening Weekend Start Date" %>
+    <%= f.date_field :open_startDate %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_endDate, "Opening Weekend End Date" %>
+    <%= f.date_field :open_endDate %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_wknd_BO, "Opening Weekend Box Office" %>
+    <%= f.number_field :open_wknd_BO %>
+  </div>
+
+  <div class="field">
+    <%= f.label :domestic_BO, "Domestic Box Office" %>
+    <%= f.number_field :domestic_BO %>
+  </div>
+
+  <div class="field">
+    <%= f.label :intl_BO, "International Box Office" %>
+    <%= f.number_field :intl_BO %>
+  </div>
+
+  <div class="field">
+    <%= f.label :total_BO, "Total Box Office" %>
+    <%= f.number_field :total_BO %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_wknd_theaters, "# Theaters Opening Weekend" %>
+    <%= f.number_field :open_wknd_theaters %>
+  </div>
+
+  <div class="field">
+    <%= f.label :RT_critic, "RT Critics Score" %>
+    <%= f.number_field :RT_critic, step: 0.01 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :RT_audience, "RT Audience Score" %>
+    <%= f.number_field :RT_audience, step: 0.01 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update Movie" %>
+  </div>
+
+<% end %>
