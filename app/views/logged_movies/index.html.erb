@@ -1,6 +1,6 @@
 <h1> Logged Movies </h1>
 
-<table class="logged_movies_table">
+<table class="w3-table w3-striped">
 
   <thead>
     <tr>
@@ -12,10 +12,10 @@
       <th>Budget</th>
       <th>Revenue</th>
       <%# <th>Production Companies</th> %> <%#need to figure out this functionality for looping through multiple prodcos%>
-      <th>Domestic Distributer</th>
-      <th>International Distributer</th>
-      <th>Opening Weekend Start Date</th>
-      <th>Opening Weekend End Date</th>
+      <th>Domestic Distributor</th>
+      <th>International Distributor</th>
+      <%#<th>Opening Weekend Start Date</th> %>
+      <%#<th>Opening Weekend End Date</th>%>
       <th>Opening Weekend Box Office</th>
       <th>Domestic Box Office</th>
       <th>International Box Office</th>
@@ -45,8 +45,8 @@
         <td> <%= number_to_currency(movie["revenue"], precision: 0) if movie["revenue"] %> </td> <%#might delete if redundant%>
         <td> <%= movie["domestic_distrib"] %> </td>
         <td> <%= movie["intl_distrib"] %> </td>
-        <td> <%= movie["open_startDate"].strftime("%B %d, %Y") if movie["open_startDate"] %> </td>
-        <td> <%= movie["open_endDate"].strftime("%B %d, %Y") if movie["open_endDate"] %> </td>
+        <%#<td> <%= movie["open_startDate"].strftime("%B %d, %Y") if movie["open_startDate"] %><%# </td>%>
+        <%#<td> <%= movie["open_endDate"].strftime("%B %d, %Y") if movie["open_endDate"] %> <%#</td> %>
         <td> <%= number_to_currency(movie["open_wknd_BO"], precision: 0) if movie["open_wknd_BO"] %> </td>
         <td> <%= number_to_currency(movie["domestic_BO"], precision: 0) if movie["domestic_BO"] %> </td>
         <td> <%= number_to_currency(movie["intl_BO"], precision: 0) if movie["intl_BO"] %> </td>
@@ -54,7 +54,7 @@
         <td> <%= number_with_delimiter(movie["open_wknd_theaters"]) if movie["open_wknd_theaters"] %> </td>
         <td> <%= number_to_percentage(movie["RT_critic"] * 100, precision: 0) if movie["RT_critic"] %> </td>
         <td> <%= number_to_percentage(movie["RT_audience"] * 100, precision: 0) if movie["RT_audience"] %> </td>
-        <%#<td>  <%= link_to 'Edit', edit_logged_movie_path(tmdb_id: movie.tmdb_id), class: 'btn btn-primary' %> <%#</td> %>
+        <td>  <%= link_to 'Edit', edit_logged_movie_path(tmdb_id: movie.tmdb_id), class: 'btn btn-primary' %> </td> 
       </tr>
     <%end%>
   </tbody>

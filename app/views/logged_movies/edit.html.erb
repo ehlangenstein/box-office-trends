@@ -1,13 +1,66 @@
-<%= form_with(model: @movie, url: logged_movie_path(@movie.tmdb_id), method: :patch) do |f| %>
+<h1>Edit Movie: <%=@movie.title%> </h1>
+
+<%= form_with(model: @movie, url: logged_movie_path(@movie.tmdb_id), method: :patch) do |form| %>
   <!-- Form fields for movie parameters -->
-  <div>
-    <%= f.label :domestic_distrib %>
-    <%= f.text_field :domestic_distrib %>
+  <!-- add ability to search in drop down menu --> 
+  <!-- <div>
+    <%= form.label :domestic_distrib %>
+    <%= form.text_field :domestic_distrib %>
   </div>
+  <div>
+    <%= form.label :intl_distrib, "International Distributor" %>
+    <%= form.text_field :intl_distrib %>
+  </div> -->
   
+  <!--<div>
+    <%= form.label :open_startDate, "Opening Weekend Start Date" %>
+    <%= form.date_field :open_startDate %>
+  </div>
+
+  <div>
+    <%= form.label :open_endDate, "Opening Weekend End Date" %>
+    <%= form.date_field :open_endDate %>
+  </div> -->
+
+  <div>
+    <%= form.label :open_wknd_BO, "Opening Weekend Box Office" %>
+    <%= form.number_field :open_wknd_BO %>
+  </div>
+
+  <div>
+    <%= form.label :domestic_BO, "Domestic Box Office" %>
+    <%= form.number_field :domestic_BO %>
+  </div>
+
+  <div>
+    <%= form.label :intl_BO, "International Box Office" %>
+    <%= form.number_field :intl_BO %>
+  </div>
+
+  <div>
+    <%= form.label :total_BO, "Total Box Office" %>
+    <%= form.number_field :total_BO %>
+  </div>
+
+  <div>
+    <%= form.label :open_wknd_theaters, "Theaters Opening Weekend" %>
+    <%= form.number_field :open_wknd_theaters %>
+  </div>
+
+  <div>
+    <%= form.label :RT_critic, "RT Critics Score" %>
+    <%= form.number_field :RT_critic, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :RT_audience, "RT Audience Score" %>
+    <%= form.number_field :RT_audience, step: 0.01 %>
+  </div>
+
+
   <!-- Add fields for other movie attributes as needed -->
 
   <div>
-    <%= f.submit "Update Movie", class: "btn btn-primary" %>
+    <%= form.submit "Update Movie", class: "btn btn-primary" %>
   </div>
 <% end %>

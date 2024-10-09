@@ -1,6 +1,7 @@
 class LoggedMoviesController < ApplicationController
+  #this is pulling data from the movies table even though im calling it logged movies
   def index
-    @logged_movies = Movie.all
+    @logged_movies = Movie.all 
   end
 
   def edit 

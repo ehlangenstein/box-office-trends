@@ -10,13 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_07_223816) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_09_005341) do
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "logo_path"
+  end
+
+  create_table "credits", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "person_id", null: false
+    t.string "department"
+    t.string "character"
+    t.string "role"
+    t.string "credit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_credits_on_movie_id"
+    t.index ["person_id"], name: "index_credits_on_person_id"
   end
 
   create_table "festival_awards", force: :cascade do |t|
@@ -92,9 +105,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_223816) do
   create_table "people", force: :cascade do |t|
     t.integer "person_id"
     t.string "name"
-    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "profile_path"
   end
 
   create_table "production_companies", force: :cascade do |t|
@@ -112,4 +125,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_223816) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "credits", "movies"
+  add_foreign_key "credits", "people"
 end
