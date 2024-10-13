@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_09_005341) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_13_011259) do
+  create_table "box_office", force: :cascade do |t|
+    t.integer "imdb_id", null: false
+    t.integer "domestic_box_office"
+    t.integer "international_box_office"
+    t.integer "total_box_office"
+    t.integer "opening_weekend_box_office"
+    t.integer "theaters_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
@@ -82,7 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_09_005341) do
     t.integer "tmdb_id"
     t.string "title"
     t.integer "budget"
-    t.integer "imdb_id"
+    t.string "imdb_id"
     t.date "release_date"
     t.integer "revenue"
     t.integer "primary_genre"

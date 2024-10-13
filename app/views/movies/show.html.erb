@@ -1,0 +1,62 @@
+<h1><%= @movie.title %></h1>
+
+<h2>Box Office Data</h2>
+<table>
+  <tr>
+    <th>Budget</th>
+    <td><%= number_to_currency(@movie.budget, precision: 0) %></td>
+  </tr>
+  <tr>
+    <th>Revenue</th>
+    <td><%= number_to_currency(@movie.revenue, precision: 0) %></td>
+  </tr>
+  <tr>
+    <th>Opening Weekend Box Office</th>
+    <td><%= number_to_currency(@movie.open_wknd_BO, precision: 0) %></td>
+  </tr>
+  <tr>
+    <th>Domestic Box Office</th>
+    <td><%= number_to_currency(@movie.domestic_BO, precision: 0) %></td>
+  </tr>
+  <tr>
+    <th>International Box Office</th>
+    <td><%= number_to_currency(@movie.intl_BO, precision: 0) %></td>
+  </tr>
+  <tr>
+    <th>Total Box Office</th>
+    <td><%= number_to_currency(@movie.total_BO, precision: 0) %></td>
+  </tr>
+</table>
+
+<h2>Actors</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Character</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @actors.each do |actor| %>
+      <tr>
+        <td><%= actor.person.name %></td>
+        <td><%= actor.character %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Credits</h2>
+<% grouped_credits_by_department = @credits.group_by(&:department) %>
+<% grouped_credits_by_department.each do |department, credits| %>
+  <h3><%= department %></h3>
+  <%grouped_credits_by_role = credits.group_by(&:role)%>
+  <%grouped_credits_by_role.each do |role, role_credits|%>
+  <h4><%= role %></h4>
+  <ul>
+    <% role_credits.each do |credit| %>
+        <li><%= credit.person.name %></li>
+    <% end %>
+  </ul>
+<% end %>
+<% end %>

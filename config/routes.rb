@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources "movie_genres"
 
-  resources "movies" #view for individual movie data
+  resources "movies", only: [:show] #view for individual movie data
   resources "companies" 
   
   # Login/logout

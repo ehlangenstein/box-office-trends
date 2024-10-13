@@ -1,13 +1,10 @@
 class MoviesController < ApplicationController
   def show
-    @movie = TmdbService.fetch_movie_details(params[:id])
+    @movie = Movie.find_by(tmdb_id: params[:id])
+    # Fetch actors (credits with a character)
+    @actors = @movie.credits.joins(:person).where.not(character: nil).order(:order)
     
-    if @movie
-      # Render your movie details
-    else
-      # Handle error case
-      flash[:error] = "Movie not found."
-      redirect_to root_path
-    end
+    # Fetch other credits (Writing, Directing, Production)
+    @credits = @movie.credits.joins(:person).where(character: nil)
   end
 end

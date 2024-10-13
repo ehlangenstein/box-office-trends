@@ -70,6 +70,10 @@ class TmdbMovieService
         # Call the production company service
         Rails.logger.info "Calling TMDB Production Company service for movie ID: #{movie.tmdb_id}"
         TmdbProdCoService.fetch_and_store_production_companies(movie.tmdb_id)
+
+        # Call the credits service
+        Rails.logger.info "Calling TMDB Credits service for movie ID: #{movie.tmdb_id}"
+        TmdbCreditsService.fetch_and_store_credits(movie.tmdb_id)
       else
         Rails.logger.error "failed to create or find movie with tmdb id #{movie_id}"
       end

@@ -23,20 +23,34 @@ class TmdbCreditsService
     if credits_data
       movie = Movie.find_by(tmdb_id: movie_id)
       return unless movie # Skip if movie is not found
-      
-      # Save cast (actors) with order 0-4
+
+      # Save cast (actors) with order 0-4, department set as "Acting"
       credits_data["cast"].each do |cast_member|
         next unless cast_member["order"] <= 4  # Only actors with order 0-4
 
         person = find_or_create_person(cast_member)
-        save_credit(movie.id, person.id, cast_member["character"], "Acting", cast_member["credit_id"])
+        save_credit(
+          movie.id,
+          person.id,
+          cast_member["character"],
+          "Acting",  # Department for actors
+          cast_member["credit_id"],
+          "Acting"   # Set department as Acting
+        )
       end
 
       # Save specific crew members for Writing, Directing, and Production
       credits_data["crew"].each do |crew_member|
         if valid_department_and_job?(crew_member)
           person = find_or_create_person(crew_member)
-          save_credit(movie.id, person.id, nil, crew_member["job"], crew_member["credit_id"])
+          save_credit(
+            movie.id,
+            person.id,
+            nil,
+            crew_member["job"],
+            crew_member["credit_id"],
+            crew_member["department"]  # Set the department from crew_member
+          )
         end
       end
 
@@ -57,13 +71,14 @@ class TmdbCreditsService
   end
 
   # Helper to save a credit
-  def self.save_credit(movie_id, person_id, character, role, credit_id)
+  def self.save_credit(movie_id, person_id, character, role, credit_id, department)
     Credit.find_or_create_by(
       movie_id: movie_id,
       person_id: person_id,
       character: character,
       role: role,
-      credit_id: credit_id
+      credit_id: credit_id,
+      department: department  # Save department value
     )
   end
 
