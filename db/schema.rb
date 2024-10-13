@@ -10,8 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_13_011259) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_13_021847) do
   create_table "box_office", force: :cascade do |t|
+    t.integer "imdb_id", null: false
+    t.integer "domestic_box_office"
+    t.integer "international_box_office"
+    t.integer "total_box_office"
+    t.integer "opening_weekend_box_office"
+    t.integer "theaters_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "box_offices", force: :cascade do |t|
     t.integer "imdb_id", null: false
     t.integer "domestic_box_office"
     t.integer "international_box_office"
