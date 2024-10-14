@@ -20,3 +20,21 @@
 <% else %>
   <p>No movies found for this company.</p>
 <% end %>
+
+
+<h2>Additional Movies from TMDB:</h2>
+
+<% if @api_movies.any? %>
+  <ul>
+    <% @api_movies.each do |movie| %>
+      <li>
+        <%= movie["title"] %> - Released: <%= movie["release_date"] %>
+       <!-- <% if movie["poster_path"].present? %> -->
+       <!--  <img src="https://image.tmdb.org/t/p/w200<%= movie["poster_path"] %>" alt="<%= movie["title"] %> Poster"> -->
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No additional movies found from TMDB for this company.</p>
+<% end %>

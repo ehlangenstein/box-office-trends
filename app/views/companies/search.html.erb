@@ -1,0 +1,21 @@
+<h1>Search for Companies</h1>
+
+<%= form_with url: search_companies_path, method: :get, local: true do |form| %>
+  <%= form.label :query, "Search for a company" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+<% end %>
+
+<% if @search_results %>
+  <h2>Search Results:</h2>
+  <ul>
+    <% @search_results.each do |company| %>
+      <li>
+        <%= link_to company["name"], company_path(company["id"]) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+

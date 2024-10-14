@@ -12,7 +12,17 @@ Rails.application.routes.draw do
   resources "movie_genres"
 
   resources "movies", only: [:show] #view for individual movie data
-  resources "companies" 
+
+  resources "companies" do 
+    collection do 
+      get 'top_companies'
+      get 'search'
+    end
+
+    member do
+      post 'add_company'
+    end
+  end
   
   # Login/logout
   get("/login", { :controller => "sessions", :action => "new" })

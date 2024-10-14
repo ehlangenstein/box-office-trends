@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_13_021847) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_14_045208) do
   create_table "box_office", force: :cascade do |t|
     t.integer "imdb_id", null: false
     t.integer "domestic_box_office"
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_021847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "logo_path"
+    t.boolean "is_top_company"
   end
 
   create_table "credits", force: :cascade do |t|
@@ -122,6 +123,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_13_021847) do
     t.integer "director"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "logged"
+    t.string "poster_path"
   end
 
   create_table "people", force: :cascade do |t|
