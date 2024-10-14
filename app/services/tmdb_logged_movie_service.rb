@@ -5,12 +5,12 @@ require 'json'
 
 class TmdbLoggedMovieService
   TMDB_API_URL = "https://api.themoviedb.org/3"
-  TMDB_API_KEY = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzRlOGFkYWU5ZWM1MzZkYzUzYzNjMzI1ZTc4MjgwMSIsIm5iZiI6MTcyNzkxMjU4Ny42NjQ2NjYsInN1YiI6IjY2ZjQ3Y2ExZjViNDk3ODY0MzIzMjUwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GhE8-BQ2oV7XwFLdfhwZJGr4pH9gUd2uNjxcueMWLgo"
+  TMDB_API_KEY = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzRlOGFkYWU5ZWM1MzZkYzUzYzNjMzI1ZTc4MjgwMSIsIm5iZiI6MTcyODMzMDE4OC4xMzc1NTUsInN1YiI6IjY2ZjQ3Y2ExZjViNDk3ODY0MzIzMjUwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9zgr_Qw-b4zKf1LuPS8oecGG1usxsqEXWf2HQzkD-yk"
 
   # Fetch the rated movies for the given account and store them in logged_movies
   def self.fetch_and_store_rated_movies(account_id)
     url = URI("#{TMDB_API_URL}/account/#{account_id}/rated/movies?language=en-US&page=1&sort_by=created_at.asc")
-    
+
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
 
@@ -36,10 +36,27 @@ class TmdbLoggedMovieService
         if movie 
           movie.update(logged: true)
           Rails.logger.info "Updated movie #{movie.title} to set logged status to true."
+          
+          # Use the BoxOfficeMojoScraper to fetch additional box office data
+          box_office_data = BoxOfficeMojoService.fetch_and_store_box_office_data(movie.imdb_id)
+          if box_office_data
+            movie.update(
+              open_wknd_theaters: box_office_data[:opening_theaters],
+              open_wknd_BO: box_office_data[:opening_weekend_box_office],
+              domestic_BO: box_office_data[:domestic_box_office],
+              intl_BO: box_office_data[:international_box_office],
+              distributor: box_office_data[:distributor],
+              widest_release_theaters: box_office_data[:widest_release]
+            )
+            Rails.logger.info "Updated movie #{movie.title} with Box Office Mojo data."
+          else
+            Rails.logger.error "Failed to fetch Box Office data for #{movie.title}"
+          end
         else
-           Rails.logger.error "Failed to find movie with tmdb_id #{tmdb_id} to update logged status."
+          Rails.logger.error "Failed to find movie with tmdb_id #{tmdb_id} to update logged status."
         end
       end
+
     else
       Rails.logger.error "Failed to fetch rated movies from TMDB."
     end
@@ -92,5 +109,6 @@ class TmdbLoggedMovieService
     end
   end
 end
+
 
 # account - 21538508

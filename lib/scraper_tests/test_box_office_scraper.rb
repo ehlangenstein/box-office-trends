@@ -38,14 +38,22 @@ end
 # Extract Box Office data using .money class
 grosses_section = release_page.css('div.mojo-performance-summary-table')
 
-# Extracting Domestic Box Office
+# Extract Domestic Box Office
 domestic_box_office = clean_money_text(grosses_section.at_xpath('.//span[contains(text(), "Domestic")]/ancestor::div[1]//span[@class="money"]')&.text)
 
-# Adjusted: Extract International Box Office (inside an <a> tag followed by money span)
-international_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "International")]/parent::span/following-sibling::span[@class="money"]')&.text)
+# Extract International Box Office (inside an <a> tag, followed by a nested span with class "money")
+international_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "International")]/parent::span/following-sibling::span/a/span[@class="money"]')&.text)
+if international_box_office.nil? # If the money span is directly inside the <a> tag
+  international_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "International")]/span[@class="money"]')&.text)
+end
 
-# Adjusted: Extract Worldwide Box Office (same structure as international)
-worldwide_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "Worldwide")]/parent::span/following-sibling::span[@class="money"]')&.text)
+# Extract Worldwide Box Office (same structure as International)
+worldwide_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "Worldwide")]/parent::span/following-sibling::span/a/span[@class="money"]')&.text)
+if worldwide_box_office.nil? # If the money span is directly inside the <a> tag
+  worldwide_box_office = clean_money_text(grosses_section.at_xpath('.//a[contains(text(), "Worldwide")]/span[@class="money"]')&.text)
+end
+
+# Log extracted values before displaying
 puts "Domestic Box Office: $#{domestic_box_office || 'N/A'}"
 puts "International Box Office: $#{international_box_office || 'N/A'}"
 puts "Worldwide Box Office: $#{worldwide_box_office || 'N/A'}"
