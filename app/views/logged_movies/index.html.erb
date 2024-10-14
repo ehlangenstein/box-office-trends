@@ -5,8 +5,6 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>TMDB ID</th>
-      <th>IMDB ID</th>
       <th>Genre</th>
       <th>Release Date</th>
       <th>Director</th>
@@ -33,9 +31,7 @@
     <%for movie in @logged_movies%>
       <tr>
         <td> <%= movie["title"] %> </td>
-        <td> <%= movie["tmdb_id"]%> </td>
-        <td> <%= movie["imdb_id"]%> </td>
-
+       
         <%#Look up genre name using primary_genre id%>
         <td>
           <% genre = Genre.find_by(genre_id: movie.primary_genre)%>
