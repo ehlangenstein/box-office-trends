@@ -7,7 +7,7 @@
 <% end %>
 
 <!-- Display movies associated with this company -->
-<h2>Movies produced by <%= @company.company_name %>:</h2>
+<h2>Logged Movies produced by <%= @company.company_name %>:</h2>
 
 <% if @movies.any? %>
   <ul>
@@ -22,7 +22,7 @@
 <% end %>
 
 
-<h2>Additional Movies from TMDB:</h2>
+<h2>Additional Movies Produced by <%= @company.company_name %>:</h2>
 
 <% if @api_movies.any? %>
   <ul>
