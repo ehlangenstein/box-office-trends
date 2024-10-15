@@ -27,3 +27,4 @@ gem 'dotenv-rails', '~> 3.1', '>= 3.1.4'
 gem 'httparty'
 gem 'nokogiri'
 
+gem 'wikidata-client'

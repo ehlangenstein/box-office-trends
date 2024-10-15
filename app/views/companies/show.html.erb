@@ -21,20 +21,65 @@
   <p>No movies found for this company.</p>
 <% end %>
 
-
+<!--
 <h2>Additional Movies Produced by <%= @company.company_name %>:</h2>
 
 <% if @api_movies.any? %>
   <ul>
     <% @api_movies.each do |movie| %>
       <li>
-        <%= movie["title"] %> - Released: <%= movie["release_date"] %>
+        <%= movie["title"] %> - Released: <%= movie["release_date"] %> -->
        <!-- <% if movie["poster_path"].present? %> -->
        <!--  <img src="https://image.tmdb.org/t/p/w200<%= movie["poster_path"] %>" alt="<%= movie["title"] %> Poster"> -->
-        <% end %>
+        <!-- <% end %>
       </li>
     <% end %>
   </ul>
 <% else %>
   <p>No additional movies found from TMDB for this company.</p>
+<% end %> -->
+
+
+
+
+<!-- Display movies fetched from NeonFilmsWikiScraper (if company is Neon) -->
+<% if @company.company_id == 90733 %>
+  <h2>Movies produced by Neon:</h2>
+
+    <% if @movies_data.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>TMDB ID</th>
+            <th>IMDb ID</th>
+            <th>Opening Weekend Box Office</th>
+            <th>Domestic Box Office</th>
+            <th>International Box Office</th>
+            <th>Distributor</th>
+            <th>Widest Release Theaters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @movies_data.each do |movie_data| %>
+            <tr>
+              <td><%= movie_data[:title] %></td>
+              <td><%= movie_data[:tmdb_id] %></td>
+              <td><%= movie_data[:imdb_id] %></td>
+              <% if movie_data[:box_office_data] != 'N/A' %>
+                <td><%= movie_data[:box_office_data][:open_wknd_BO] || 'N/A' %></td>
+                <td><%= movie_data[:box_office_data][:domestic_BO] || 'N/A' %></td>
+                <td><%= movie_data[:box_office_data][:intl_BO] || 'N/A' %></td>
+                <td><%= movie_data[:box_office_data][:distributor] || 'N/A' %></td>
+                <td><%= movie_data[:box_office_data][:widest_release] || 'N/A' %></td>
+              <% else %>
+                <td colspan="5">No box office data available</td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No additional movies found for this company.</p>
+    <% end %>
 <% end %>

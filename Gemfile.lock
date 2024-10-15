@@ -96,8 +96,19 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    excon (0.112.0)
+    faraday (2.12.0)
+      faraday-net_http (>= 2.0, < 3.4)
+      json
+      logger
+    faraday-excon (2.2.0)
+      excon (>= 0.109.0)
+      faraday (>= 2.11.0, < 3)
+    faraday-net_http (3.3.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashie (5.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.7)
       domain_name (~> 0.5)
@@ -111,6 +122,7 @@ GEM
     irb (1.11.2)
       rdoc
       reline (>= 0.4.2)
+    json (2.7.2)
     logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -130,6 +142,8 @@ GEM
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -209,6 +223,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    uri (0.13.1)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -218,6 +233,11 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wikidata-client (0.1.0)
+      excon (~> 0.92)
+      faraday (~> 2.2)
+      faraday-excon (~> 2.1)
+      hashie (~> 5.0)
     zeitwerk (2.6.13)
 
 PLATFORMS
@@ -236,6 +256,7 @@ DEPENDENCIES
   themoviedb-api
   tzinfo-data
   web-console
+  wikidata-client
 
 RUBY VERSION
    ruby 3.2.2p53
