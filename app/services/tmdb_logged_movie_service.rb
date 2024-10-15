@@ -77,6 +77,9 @@ class TmdbLoggedMovieService
     movie_data = JSON.parse(response.read_body)
 
     if movie_data
+      # Fetch the external IDs (including Wikidata ID)
+      wikidata_id = fetch_wikidata_id(movie_id)
+
       # First, check if the movie already exists, otherwise create it
       movie = Movie.find_or_create_by(tmdb_id: movie_data["id"]) do |m|
         m.title = movie_data["title"]
@@ -85,6 +88,7 @@ class TmdbLoggedMovieService
         m.release_date = movie_data["release_date"]
         m.revenue = movie_data["revenue"]
         m.poster_path = movie_data["poster_path"]
+        m.wikidata_id = wikidata_id
       end
 
       if movie.persisted?
@@ -107,6 +111,25 @@ class TmdbLoggedMovieService
     else
         Rails.logger.error "Failed to fetch movie details for TMDB ID #{movie_id}."
     end
+  end
+
+  def self.fetch_wikidata_id(movie_id)
+    url = URI("#{TMDB_API_URL}/movie/#{movie_id}/external_ids")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request["accept"] = 'application/json'
+    request["Authorization"] = TMDB_API_KEY
+
+    response = http.request(request)
+    external_ids = JSON.parse(response.read_body)
+
+    external_ids["wikidata_id"] # Return the Wikidata ID
+  rescue => e
+    Rails.logger.error "Error fetching Wikidata ID for movie ID #{movie_id}: #{e.message}"
+    nil
   end
 end
 

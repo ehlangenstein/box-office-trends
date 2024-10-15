@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_14_064545) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_15_025406) do
   create_table "box_office", force: :cascade do |t|
     t.integer "imdb_id", null: false
     t.integer "domestic_box_office"
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_14_064545) do
     t.string "poster_path"
     t.string "distributor"
     t.integer "widest_release_theaters"
+    t.integer "wikidata_id"
   end
 
   create_table "people", force: :cascade do |t|
