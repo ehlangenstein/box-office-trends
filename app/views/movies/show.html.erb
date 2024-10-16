@@ -1,4 +1,10 @@
 <h1><%= @movie.title %></h1>
+<% if @movie.poster_path.present? %>
+  <%= image_tag "https://image.tmdb.org/t/p/w185#{@movie.poster_path}", alt: @movie.title, class: "img-fluid" %>
+<% else %>
+  <p>No poster available</p>
+<% end %>
+
 
 <h2>Box Office Data</h2>
 <table>

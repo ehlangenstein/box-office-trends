@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def show
-    @movie = Movie.find_by(tmdb_id: params[:id])
+    @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
     # Fetch actors (credits with a character)
     @actors = @movie.credits.joins(:person).where.not(character: nil).order(:order)
     

@@ -28,3 +28,5 @@ gem 'httparty'
 gem 'nokogiri'
 
 gem 'wikidata-client'
+
+gem 'openai'

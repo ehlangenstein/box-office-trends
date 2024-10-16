@@ -2,7 +2,7 @@
 <html>
   <head>
     <%# Replace with your application name %>
-    <title>Starter App</title>
+    <title>Box Office Trends</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,30 +12,58 @@
    <%#  <%= stylesheet_link_tag 'logged_movies_table', media: 'all' %>
   </head>
 
-  <body>
-    <p>
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Sign-Up/Login with padding -->
+    <div class="container py-3">
       <% @user = User.find_by({ "id" => session["user_id"] }) %>
       <% if @user == nil %>
         <a href="/users/new">Sign Up</a> | <a href="/login">Login</a>
       <% else %>
         <%= @user["real_name"] %> | <a href="/logout">Logout</a>
       <% end %>
-    </p>
-    <p>
-
-    <!-- Navigation Bar with Buttons -->
-    <nav class="nav-buttons">
-      <%= link_to "Logged Movies", "/logged_movies", class: "nav-button" %>
-      <%= link_to "Companies","/companies",class: "nav-button"%>
-      <%= link_to "Trends","/trends", class: "nav-button"%>
-      <%= link_to "Movie Genres","/movie_genres", class: "nav-button"%>
-    </nav>
-    </p>
-    <p>
-      <%= flash["notice"] %>
-    </p>
-    <div class = "container">
-    <%= yield %>
     </div>
+   
+
+<!-- Navigation Bar with Bootstrap Tabs -->
+<div class="container">
+  <nav class="nav nav-underline">
+    <li class="nav-item">
+      <%= link_to "Home", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Logged Movies", "/logged_movies", class: "nav-link #{'active' if current_page?(logged_movies_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Top Companies", top_companies_companies_path, class: "nav-link #{'active' if current_page?(top_companies_companies_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Companies", "/companies", class: "nav-link #{'active' if current_page?(companies_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Trends", "/trends", class: "nav-link #{'active' if current_page?(trends_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Movie Genres", "/movie_genres", class: "nav-link #{'active' if current_page?(movie_genres_path)}" %>
+    </li>
+  </nav>
+</div>
+
+  <div class="container mt-4">
+    <%= flash["notice"] %>
+  </div>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+
+  <!-- Footer Section -->
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container text-center">
+        <p class="text-muted small">
+          This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
+        </p>
+        <%= image_tag "tmdb_logo", alt: "TMDB Logo", class: "img-fluid" %>
+      </div>
+    </footer>
   </body>
 </html>

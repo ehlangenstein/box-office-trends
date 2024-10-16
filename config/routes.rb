@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   # Resources
   resources "sessions"
   resources "users"
@@ -7,11 +8,16 @@ Rails.application.routes.draw do
   resources "trends" #tab for data analysis
   #resources "logged_movies" #tab for table of logged movies
   resources :logged_movies, param: :tmdb_id
+  root to: 'home#index'
+
+  get 'domestic_box_office/filter', to: 'domestic_box_office#filter', as: 'filter_domestic_box_office'
+  resources :domestic_box_office, only: [:index] 
+  
 
 
   resources "movie_genres"
 
-  resources "movies", only: [:show] #view for individual movie data
+  resources "movies", param: :tmdb_id, only: [:show] #view for individual movie data
 
   resources "companies" do 
     collection do 
