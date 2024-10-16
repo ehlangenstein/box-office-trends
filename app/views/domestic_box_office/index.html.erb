@@ -1,75 +1,139 @@
+<!-- app/views/domestic_box_office/index.html.erb -->
 <h1>Domestic Box Office</h1>
 
 <!-- Form to filter by Monthly or Yearly -->
 <%= form_with(url: filter_domestic_box_office_path, method: :get, local: true) do |f| %>
-  <!-- Select Monthly or Yearly -->
-  <%= label_tag :filter_type, "Filter By" %>
-  <%= select_tag :filter_type, options_for_select([["Monthly", "monthly"], ["Yearly", "yearly"]], params[:filter_type] || "monthly"), id: "filter_type_select" %>
+  <div class="mb-3">
+    <%= label_tag :filter_type, "Filter Type" %>
+    <%= select_tag :filter_type, 
+        options_for_select([["Monthly", 'monthly'], ["Yearly", 'yearly']], params[:filter_type] || 'monthly'), id: "filter_type",
+        class: "form-select" %>
+  </div>
 
-  <!-- Year Filter (shown for both monthly and yearly) -->
-  <%= label_tag :year, "Year" %>
-  <%= select_tag :year, options_for_select(
-    (2000..Date.today.year).to_a.reverse, 
-    params[:year] || Date.today.year
-  ) %>
+  <!-- Year Selection -->
+  <div class="mb-3">
+    <%= label_tag :year, "Year" %>
+    <%= select_tag :year, options_for_select((2000..Date.today.year).to_a.reverse, params[:year] || Date.today.year),
+    class:"form-select" %>
+  </div>
 
-  <!-- Month Filter (only shown if Monthly is selected) -->
-  <div id="month_filter" style="<%= params[:filter_type] == 'yearly' ? 'display:none;' : '' %>">
+  <!-- Month Selection (only show if 'Monthly' is selected) -->
+  <div id="month_selector" style="display: <%= params[:filter_type] == 'yearly' ? 'none' : 'block' %>;">
     <%= label_tag :month, "Month" %>
-    <%= select_tag :month, options_for_select(
-      [["January", 1], ["February", 2], ["March", 3], ["April", 4], ["May", 5], 
-      ["June", 6], ["July", 7], ["August", 8], ["September", 9], 
-      ["October", 10], ["November", 11], ["December", 12]], 
-      params[:month] || Date.today.month
-    ) %>
+    <%= select_tag :month, options_for_select([["January", 1], ["February", 2], ["March", 3], ["April", 4], ["May", 5], ["June", 6], ["July", 7], ["August", 8], ["September", 9], ["October", 10], ["November", 11], ["December", 12]], params[:month] || Date.today.month),
+    class: "form-select" %>
   </div>
 
-  <!-- Release Scale Filter (only shown if Yearly is selected) -->
-  <div id="release_scale_filter" style="<%= params[:filter_type] == 'monthly' ? 'display:none;' : '' %>">
-    <%= label_tag :release_scale, "Release Type" %>
-    <%= select_tag :release_scale, options_for_select([["All", "all"], ["Wide Releases", "wide"], ["Limited Releases", "limited"]], params[:release_scale] || "all") %>
+  <!-- Release Scale Selection (only show if 'Yearly' is selected) -->
+  <div id="release_scale_selector" style="display: <%= params[:filter_type] == 'yearly' ? 'block' : 'none' %>;">
+    <%= label_tag :release_scale, "Release Scale" %>
+    <%= select_tag :release_scale, options_for_select([["All", 'all'], ["Wide", 'wide'], ["Limited", 'limited']], params[:release_scale] || 'all'),
+    class: "form-select" %>
   </div>
-
-  <%= submit_tag "Filter" %>
+  <div class = "mt-3">
+    <%= submit_tag "Filter", class: "btn btn-primary" %>
+  </div>
 <% end %>
 
 <!-- Display the movie data -->
-<% if @movies.any? %>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Title</th>
-        <th>Domestic Gross Revenue</th>
-        <th>Total Theaters</th>
-        <th>Total Gross Revenue</th>
-        <th>Release Date</th>
-        <th>Distributor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @movies.each do |movie| %>
+<% if @filter_type == 'monthly' && @movies.any? %>
+  <div class="container-fluid">
+    <h2> Monthly Box Office Results </h2>
+    <table class="table datatable" id="monthlyBOTable">
+      <thead>
         <tr>
-          <td><%= movie[:rank] %></td>
-          <td><%= movie[:title] %></td>
-          <td><%= number_to_currency(movie[:domestic_gross]) %></td>
-          <td><%= movie[:total_theaters] %></td>
-          <td><%= number_to_currency(movie[:total_gross]) %></td>
-          <td><%= movie[:release_date] %></td>
-          <td><%= movie[:distributor] %></td>
+          <th>Rank</th>
+          <th>Title</th>
+          <th>Domestic Gross Revenue</th>
+          <th>Total Theaters</th>
+          <th>Total Gross Revenue</th>
+          <th>Release Date</th>
+          <th>Distributor</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @movies.each do |movie| %>
+          <tr>
+            <td><%= movie[:rank] %></td>
+            <td><%= movie[:title] %></td>
+            <td><%= number_to_currency(movie[:domestic_gross], precision: 0) %></td>
+            <td><%= movie[:total_theaters] %></td>
+            <td><%= number_to_currency(movie[:total_gross], precision: 0) %></td>
+            <td><%= movie[:release_date].strftime('%B %d') if movie[:release_date] %></td>
+            <td><%= movie[:distributor] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<% elsif @filter_type == 'yearly' && @movies.any? %>
+    <div class="container-fluid">
+      <h2>Yearly Box Office Results</h2>
+      <table class="table datatable" id="yearlyBOTable">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Title</th>
+            <th>Domestic Gross Revenue</th>
+            <th>Total Theaters</th>
+            <th>Opening Weekend Revenue</th>
+            <th>Percent of Total</th>
+            <th>Opening Weekend Theaters</th>
+            <th>Opening Weekend Date</th>
+            <th>Distributor</th>
+        </thead>
+        <tbody>
+          <% @movies.each do |movie| %>
+            <tr>
+              <td><%= movie[:rank] %></td>
+              <td><%= movie[:title] %></td>
+              <td><%= number_to_currency(movie[:domestic_gross],precision: 0) %></td>
+              <td><%= movie[:total_theaters] %></td>
+              <td><%= number_to_currency(movie[:opening_rev],precision: 0)%></td>
+              <td><%= number_to_percentage(movie[:percent_of_total]*100,precision:1)%></td>
+              <td><%= movie[:open_wknd_theaters]%></td>
+              <td><%= movie[:opening_weekend].strftime('%B %d') if movie[:opening_weekend] %></td>
+              <td><%= movie[:distributor] %></td>
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+    </div>
 <% else %>
-  <p>No data available for the selected filter.</p>
+    <p>No data available for this selection.</p>
 <% end %>
 
 <script>
-  // Show/Hide filters based on Monthly or Yearly selection
-  document.getElementById('filter_type_select').addEventListener('change', function() {
-    var filterType = this.value;
-    document.getElementById('month_filter').style.display = (filterType === 'monthly') ? '' : 'none';
-    document.getElementById('release_scale_filter').style.display = (filterType === 'yearly') ? '' : 'none';
+  // JavaScript to toggle the month and release scale selectors based on the filter type
+  document.getElementById('filter_type').addEventListener('change', function() {
+    const filterType = this.value;
+    document.getElementById('month_selector').style.display = filterType === 'yearly' ? 'none' : 'block';
+    document.getElementById('release_scale_selector').style.display = filterType === 'yearly' ? 'block' : 'none';
   });
+</script>
+
+<script>
+  $(document).ready(function() {
+    // DataTable for Monthly Table
+    $('#monthlyBOTable').DataTable({
+      "pageLength": 25, // Show 25 entries per page
+      "ordering": true, // Disable ordering
+      "scrollY": "400px", //Enable Vertical Scrolling
+      "scrollCollapse": true,
+      "paging": true,
+      "searching": true // Enable search filter
+    });
+
+   // DataTable for Yearly Table
+    $('#yearlyBOTable').DataTable({
+      "pageLength": 25, // Show 25 entries per page
+      "ordering": true, // Disable ordering
+      "scrollY": "400px", //Enable Vertical Scrolling
+      "scrollCollapse": true,
+      "paging": true,
+      "searching": true // Enable search filter
+    });
+  });
+
 </script>

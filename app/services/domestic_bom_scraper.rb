@@ -35,7 +35,7 @@ class DomesticBomScraper
     raise ArgumentError, 'Invalid month' unless month_name
 
     # Build the correct URL
-    url = "#{BASE_URL}/#{month_name}/#{year}/?grossesOption=calendarGrosses"
+    url = "#{BASE_MONTH_URL}/#{month_name}/#{year}/?grossesOption=calendarGrosses"
     doc = Nokogiri::HTML(URI.open(url))
 
     movies = []
@@ -113,5 +113,5 @@ class DomesticBomScraper
   def self.clean_percentage(value)
     value.gsub('%', '').to_f / 100.0
   end
-  
+
 end
