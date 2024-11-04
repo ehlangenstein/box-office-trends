@@ -20,6 +20,9 @@
     
     <%= stylesheet_link_tag 'application', media: 'all' %>
    <%#  <%= stylesheet_link_tag 'logged_movies_table', media: 'all' %>
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
 
   <body class="d-flex flex-column min-vh-100">
@@ -50,7 +53,7 @@
           <%= link_to "Companies", "/companies", class: "nav-link #{'active' if current_page?(companies_path)}" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Trends", "/trends", class: "nav-link #{'active' if current_page?(trends_path)}" %>
+          <%= link_to "Trends", trends_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "Movie Genres", "/movie_genres", class: "nav-link #{'active' if current_page?(movie_genres_path)}" %>
@@ -75,7 +78,7 @@
           <p class="text-muted small">
             This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
           </p>
-          <%= image_tag "tmdb_logo", alt: "TMDB Logo", class: "img-fluid" %>
+          <%= image_tag asset_path( "tmdb_logo.svg"), alt: "TMDB Logo", class: "img-fluid" %>
         </div>
       </footer>
 

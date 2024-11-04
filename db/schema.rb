@@ -22,6 +22,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_025406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "box_offices", force: :cascade do |t|
+    t.integer "imdb_id", null: false
+    t.integer "domestic_box_office"
+    t.integer "international_box_office"
+    t.integer "total_box_office"
+    t.integer "opening_weekend_box_office"
+    t.integer "theaters_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"

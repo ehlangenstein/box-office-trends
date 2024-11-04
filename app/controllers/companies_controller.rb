@@ -156,7 +156,7 @@ class CompaniesController < ApplicationController
       nil
     end
   end
-
+ 
   # Fetch the movies from the TMDB API for a given company ID
   def fetch_company_movies_from_api(company_id)
     @api_movies = []

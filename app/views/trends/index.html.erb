@@ -1,0 +1,19 @@
+<h1>Trends Analysis</h1>
+
+<canvas id="distributorChart" width="400" height="400"></canvas>
+<script>
+  const distributorData = {
+    labels: <%= @movies_by_distributor.keys.to_json.html_safe %>,
+    datasets: [{
+      data: <%= @movies_by_distributor.values.to_json.html_safe %>,
+      backgroundColor: [
+        // Add colors for each distributor
+      ],
+    }]
+  };
+  
+  new Chart(document.getElementById('distributorChart'), {
+    type: 'pie',
+    data: distributorData
+  });
+</script>

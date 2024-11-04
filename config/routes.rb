@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources "users"
   resources "dice"
   resources "home" #home page of app
-  resources "trends" #tab for data analysis
   #resources "logged_movies" #tab for table of logged movies
   resources :logged_movies, param: :tmdb_id
   root to: 'home#index'
@@ -13,7 +12,7 @@ Rails.application.routes.draw do
   get 'domestic_box_office/filter', to: 'domestic_box_office#filter', as: 'filter_domestic_box_office'
   resources :domestic_box_office, only: [:index] 
   
-
+  resources "trends"
 
   resources "movie_genres"
 
