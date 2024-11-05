@@ -1,19 +1,21 @@
 <h1>Trends Analysis</h1>
+<div id="chart"></div>
 
-<canvas id="distributorChart" width="400" height="400"></canvas>
 <script>
-  const distributorData = {
-    labels: <%= @movies_by_distributor.keys.to_json.html_safe %>,
-    datasets: [{
-      data: <%= @movies_by_distributor.values.to_json.html_safe %>,
-      backgroundColor: [
-        // Add colors for each distributor
-      ],
-    }]
-  };
-  
-  new Chart(document.getElementById('distributorChart'), {
-    type: 'pie',
-    data: distributorData
+  document.addEventListener("DOMContentLoaded", function () {
+    const data = [30, 86, 168, 281, 303, 365];
+    const chart = d3.select("#chart")
+      .append("svg")
+      .attr("width", 400)
+      .attr("height", 100);
+
+    chart.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("width", d => d)
+      .attr("height", 20)
+      .attr("y", (d, i) => i * 25)
+      .attr("fill", "steelblue");
   });
 </script>

@@ -21,7 +21,6 @@ class DomesticBomScraper
     end
   end
 
-  
   # Map month numbers to their full names
   MONTH_NAMES = {
     1 => 'january',
@@ -229,4 +228,6 @@ class DomesticBomScraper
     value.gsub('%', '').to_f / 100.0
   end
 
+
+  
 end
