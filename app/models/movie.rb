@@ -9,4 +9,24 @@ class Movie < ApplicationRecord
 
   has_many :credits
   has_many :people, through: :credits
+
+
+  def self.find_or_create_by_imdb_id(imdb_id)
+    movie_data = TmdbMovieService.fetch_movie_by_imdb_id(imdb_id)
+    
+    if movie_data
+      Movie.find_or_create_by(tmdb_id: movie_data[:tmdb_id]) do |movie|
+        movie.title = movie_data[:title]
+        movie.release_date = movie_data[:release_date]
+        movie.budget = movie_data[:budget]
+        movie.revenue = movie_data[:revenue]
+        movie.poster_path = movie_data[:poster_path]
+        # Add any other fields as needed
+      end
+    else
+      Rails.logger.warn "Movie with IMDb ID #{imdb_id} could not be found in TMDB."
+      nil
+    end
+  end
+  
 end

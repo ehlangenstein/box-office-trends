@@ -1,0 +1,2 @@
+class WeeklyBoxOffice < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class MonthlyBoxOffice < ApplicationRecord
+end

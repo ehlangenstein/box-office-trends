@@ -10,29 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_15_025406) do
-  create_table "box_office", force: :cascade do |t|
-    t.integer "imdb_id", null: false
-    t.integer "domestic_box_office"
-    t.integer "international_box_office"
-    t.integer "total_box_office"
-    t.integer "opening_weekend_box_office"
-    t.integer "theaters_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "box_offices", force: :cascade do |t|
-    t.integer "imdb_id", null: false
-    t.integer "domestic_box_office"
-    t.integer "international_box_office"
-    t.integer "total_box_office"
-    t.integer "opening_weekend_box_office"
-    t.integer "theaters_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
@@ -89,6 +67,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_025406) do
     t.integer "tmdb_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "monthly_box_offices", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "month"
+    t.integer "year"
+    t.integer "rank"
+    t.integer "domestic_gross"
+    t.integer "total_theaters"
+    t.integer "total_gross"
+    t.date "release_date"
+    t.string "distributor"
+    t.index ["movie_id"], name: "index_monthly_box_offices_on_movie_id"
   end
 
   create_table "movie_genres", force: :cascade do |t|
@@ -151,6 +142,40 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_15_025406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "weekly_box_offices", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "week_number"
+    t.integer "year"
+    t.integer "rank"
+    t.integer "rank_last_week", default: 0
+    t.integer "weekly_gross"
+    t.decimal "gross_change_per_week", precision: 5, scale: 2
+    t.integer "total_theaters"
+    t.integer "change_theaters_per_week"
+    t.integer "per_theater_average_gross"
+    t.integer "total_gross"
+    t.integer "weeks_in_release"
+    t.string "distributor"
+    t.index ["movie_id"], name: "index_weekly_box_offices_on_movie_id"
+  end
+
+  create_table "yearly_box_offices", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "year"
+    t.integer "rank"
+    t.integer "domestic_gross"
+    t.integer "total_theaters"
+    t.integer "opening_rev"
+    t.decimal "percent_of_total", precision: 5, scale: 2
+    t.integer "open_wknd_theaters"
+    t.date "opening_weekend"
+    t.string "distributor"
+    t.index ["movie_id"], name: "index_yearly_box_offices_on_movie_id"
+  end
+
   add_foreign_key "credits", "movies"
   add_foreign_key "credits", "people"
+  add_foreign_key "monthly_box_offices", "movies"
+  add_foreign_key "weekly_box_offices", "movies"
+  add_foreign_key "yearly_box_offices", "movies"
 end

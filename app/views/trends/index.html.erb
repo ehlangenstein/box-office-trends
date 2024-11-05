@@ -1,21 +1,92 @@
-<h1>Trends Analysis</h1>
-<div id="chart"></div>
+<h1 class="my-4 text-center">Trends Analysis</h1>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const data = [30, 86, 168, 281, 303, 365];
-    const chart = d3.select("#chart")
-      .append("svg")
-      .attr("width", 400)
-      .attr("height", 100);
+<!-- Tabs Navigation -->
+<ul class="nav nav-tabs" id="trendTabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="movies-tab" data-bs-toggle="tab" href="#movies" role="tab" aria-controls="movies" aria-selected="true">Movies</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="yearly-box-office-tab" data-bs-toggle="tab" href="#yearly-box-office" role="tab" aria-controls="yearly-box-office" aria-selected="false">Yearly Box Office Data</a>
+  </li>
+</ul>
 
-    chart.selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("width", d => d)
-      .attr("height", 20)
-      .attr("y", (d, i) => i * 25)
-      .attr("fill", "steelblue");
-  });
-</script>
+<!-- Tab Content -->
+<div class="tab-content mt-3" id="trendTabsContent">
+  
+  <!-- Movies Tab -->
+  <div class="tab-pane fade show active" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+    <h2 class="my-3">Movies</h2>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Movie ID</th>
+          <th>TMDB ID</th>
+          <th>Title</th>
+          <th>Budget</th>
+          <th>Revenue</th>
+          <th>Release Date</th>
+          <th>IMDB ID</th>
+          <th>Primary Genre</th>
+          <th>Director</th>
+          <th>Distributor</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @movies.each do |movie| %>
+          <tr>
+            <td><%= movie.id %></td>
+            <td><%= movie.tmdb_id %></td>
+            <td><%= movie.title %></td>
+            <td><%= number_to_currency(movie.budget) %></td>
+            <td><%= number_to_currency(movie.revenue) %></td>
+            <td><%= movie.release_date %></td>
+            <td><%= movie.imdb_id %></td>
+            <td><%= movie.primary_genre %></td>
+            <td><%= movie.director %></td>
+            <td><%= movie.distributor %></td>
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Yearly Box Office Data Tab -->
+  <div class="tab-pane fade" id="yearly-box-office" role="tabpanel" aria-labelledby="yearly-box-office-tab">
+    <h2 class="my-3">Yearly Box Office Data</h2>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Movie ID</th>
+          <th>Year</th>
+          <th>Rank</th>
+          <th>Domestic Gross</th>
+          <th>Total Theaters</th>
+          <th>Opening Revenue</th>
+          <th>Percent of Total</th>
+          <th>Opening Weekend Theaters</th>
+          <th>Opening Weekend Date</th>
+          <th>Distributor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @yearly_box_offices.each do |record| %>
+          <tr>
+            <td><%= record.movie_id %></td>
+            <td><%= record.year %></td>
+            <td><%= record.rank %></td>
+            <td><%= number_to_currency(record.domestic_gross) %></td>
+            <td><%= record.total_theaters %></td>
+            <td><%= number_to_currency(record.opening_rev) %></td>
+            <td><%= (record.percent_of_total * 100).round(2) %>%</td>
+            <td><%= record.open_wknd_theaters %></td>
+            <td><%= record.opening_weekend %></td>
+            <td><%= record.distributor %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

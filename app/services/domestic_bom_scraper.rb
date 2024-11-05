@@ -62,11 +62,12 @@ class DomesticBomScraper
       title_link = columns[2].at_css('a')
       movie_title = title_link ? title_link.text.strip : 'N/A' # Use 'N/A' if title_link is nil
       movie_url = "https://www.boxofficemojo.com#{title_link['href']}" if title_link
+      
+      imdb_id = fetch_imdb_id_from_release_page(movie_url) if movie_url
 
       # If distributor is missing, fetch it from the release page
       distributor = columns[10].text.strip
       if distributor == "-" && movie_url
-        Rails.logger.info "Distributor is missing ('-') for '#{movie_title}'. Fetching from release page: #{movie_url}"
         distributor = fetch_distributor_from_release_page(movie_url)
       end
 
@@ -74,6 +75,7 @@ class DomesticBomScraper
         rank: columns[0].text.strip,
         rank_last_week: columns[1].text.strip == '-' ? 0 : columns[1].text.strip.to_i,
         title: movie_title,
+        imdb_id: imdb_id,
         weekly_gross: clean_currency(columns[3].text.strip),
         gross_change_per_week: clean_percentage(columns[4].text.strip), #percentage
         total_theaters: clean_integer(columns[5].text.strip),
@@ -115,10 +117,12 @@ class DomesticBomScraper
       movie_title = title_link.text.strip
       movie_url = "https://www.boxofficemojo.com#{title_link['href']}" if title_link
 
+      imdb_id = fetch_imdb_id_from_release_page(movie_url) if movie_url
+
       # If distributor is missing, fetch it from the release page
       distributor = columns[9].text.strip
       if distributor == "-" && movie_url
-        Rails.logger.info "Distributor is missing ('-') for '#{movie_title}'. Using release page URL: #{movie_url}"
+       
         distributor = fetch_distributor_from_release_page(movie_url)
       end
 
@@ -126,6 +130,7 @@ class DomesticBomScraper
       movie = {
         rank: columns[0].text.strip,
         title: columns[1].text.strip,
+        imdb_id: imdb_id,
         domestic_gross: clean_currency(columns[5].text.strip),
         total_theaters: clean_integer(columns[6].text.strip),
         total_gross: clean_currency(columns[7].text.strip),
@@ -161,29 +166,32 @@ class DomesticBomScraper
       movie_title = title_link.text.strip
       movie_url = "https://www.boxofficemojo.com#{title_link['href']}" if title_link
 
+      imdb_id = fetch_imdb_id_from_release_page(movie_url) if movie_url
+
       # If distributor is missing, fetch it from the release page
       distributor = columns[12].text.strip
       if distributor == "-"  && movie_url
-        Rails.logger.info "Distributor is missing ('-') for '#{movie_title}'. Fetching from release page: #{movie_url}"
         distributor = fetch_distributor_from_release_page(movie_url)
       end
 
       movie = {
         rank: columns[0].text.strip,
         title: columns[1].text.strip,
+        imdb_id: imdb_id,
+        year: year,
         domestic_gross: clean_currency(columns[5].text.strip),
         total_theaters: clean_integer(columns[6].text.strip),
         opening_rev: clean_currency(columns[7].text.strip),
         percent_of_total: clean_percentage(columns[8].text.strip),
         open_wknd_theaters: clean_integer(columns[9].text.strip),
-        opening_weekend: parse_date(columns[10].text.strip),
+        opening_weekend: parse_date(columns[10].text.strip, year),
         distributor: distributor
       }
 
       movies << movie
     end
 
-    movies
+    save_yearly_data(movies)
   end
 
 
@@ -195,7 +203,6 @@ class DomesticBomScraper
       
       if distributor_element
         distributor_text = distributor_element.inner_text.strip
-        Rails.logger.info "Fetched distributor: #{distributor_text}"
         distributor_text
       else
         Rails.logger.warn "Distributor not found on release page: #{movie_url}"
@@ -208,6 +215,25 @@ class DomesticBomScraper
   end
 
 
+  # Fetch IMDb ID from a movie's release page
+  def self.fetch_imdb_id_from_release_page(movie_url)
+    begin
+      release_page = Nokogiri::HTML(URI.open(movie_url))
+      imdb_link = release_page.at_css('a[href*="imdb.com/title"]')
+      if imdb_link
+        imdb_id = imdb_link['href'].match(/title\/(tt\d+)/)[1]  # Extract IMDb ID
+        #Rails.logger.info "Fetched IMDb ID: #{imdb_id}"
+        imdb_id
+      else
+        Rails.logger.warn "IMDb ID not found on release page: #{movie_url}"
+        nil
+      end
+    rescue OpenURI::HTTPError => e
+      Rails.logger.error "Error fetching IMDb ID from #{movie_url}: #{e.message}"
+      nil
+    end
+  end
+
   # Helper method to clean and convert currency values into integers
   def self.clean_currency(value)
     value.gsub(/[$,]/, '').to_i
@@ -219,8 +245,13 @@ class DomesticBomScraper
   end
 
   # Helper method to parse dates formatted as "Apr 15"
-  def self.parse_date(value)
-    Date.strptime(value, "%b %d") rescue nil
+  def self.parse_date(value, year = nil)
+    if value =~ /^\w{3} \d{1,2}$/ # Checks if format is "Jun 14"
+      # If only month and day are present, add the provided year
+      Date.strptime("#{value} #{year}", "%b %d %Y") rescue nil
+    else
+      Date.strptime(value, "%b %d, %Y") rescue nil # For full "Jun 14, 2023" format
+    end
   end
 
   # Helper method to clean percentage values
@@ -229,5 +260,43 @@ class DomesticBomScraper
   end
 
 
-  
+  # Method to save yearly data to the database
+  def self.save_yearly_data(movies_data)
+    movies_data.each do |movie_data|
+      # Find the movie by IMDb ID to link to `movies` table, or create a new record
+      movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
+      
+      if movie
+
+        tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
+
+      # Update movie record with fetched TMDB data
+      if tmdb_data
+        movie.update(
+          tmdb_id: tmdb_data[:tmdb_id],
+          title: tmdb_data[:title],
+          release_date: tmdb_data[:release_date],
+          budget: tmdb_data[:budget],
+          revenue: tmdb_data[:revenue],
+          poster_path: tmdb_data[:poster_path]
+        )
+      end
+        # Check if a record for this movie and year already exists
+        yearly_record = YearlyBoxOffice.find_or_initialize_by(movie_id: movie.id, year: movie_data[:year])
+         Rails.logger.debug "Saving yearly box office data for #{movie.title} (Year: #{movie_data[:year]})"
+        yearly_record.update!(
+          rank: movie_data[:rank],
+          domestic_gross: movie_data[:domestic_gross],
+          total_theaters: movie_data[:total_theaters],
+          opening_rev: movie_data[:opening_rev],
+          percent_of_total: movie_data[:percent_of_total],
+          open_wknd_theaters: movie_data[:open_wknd_theaters],
+          opening_weekend: movie_data[:opening_weekend],
+          distributor: movie_data[:distributor]
+        )
+      else
+        Rails.logger.warn "Movie with IMDb ID #{movie_data[:imdb_id]} not found. Skipping yearly data entry."
+      end
+    end
+  end
 end

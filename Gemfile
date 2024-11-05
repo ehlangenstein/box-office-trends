@@ -30,3 +30,6 @@ gem 'nokogiri'
 gem 'wikidata-client'
 
 gem 'openai'
+
+
+gem 'whenever', require: false
