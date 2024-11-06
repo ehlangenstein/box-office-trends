@@ -146,7 +146,7 @@ class DomesticBomScraper
 
   # Scrape yearly box office data with release type filter
 
-  #later need to pull data for only in month releases vs gross calendar
+  #later need to pull data for only in month releases vs gross calendar - currently does calendar grosses 
   def self.scrape_year(year, release_scale = :all)
     release_scale=release_scale.to_sym
     scale_query = RELEASE_SCALES[release_scale]
@@ -296,6 +296,74 @@ class DomesticBomScraper
         )
       else
         Rails.logger.warn "Movie with IMDb ID #{movie_data[:imdb_id]} not found. Skipping yearly data entry."
+      end
+    end
+  end
+
+  # Method to save weekly data to the database
+  def self.save_weekly_data(movies_data, year, week_number)
+    movies_data.each do |movie_data|
+      movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
+
+      if movie
+        # Update movie record with TMDB data if necessary
+        tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
+        if tmdb_data
+          movie.update(
+            tmdb_id: tmdb_data[:tmdb_id],
+            title: tmdb_data[:title],
+            release_date: tmdb_data[:release_date],
+            budget: tmdb_data[:budget],
+            revenue: tmdb_data[:revenue],
+            poster_path: tmdb_data[:poster_path]
+          )
+        end
+
+        # Save or update weekly box office data
+        weekly_record = WeeklyBoxOffice.find_or_initialize_by(movie_id: movie.id, year: year, week_number: week_number)
+        weekly_record.update!(
+          rank: movie_data[:rank],
+          weekly_gross: movie_data[:weekly_gross],
+          total_theaters: movie_data[:total_theaters],
+          change_theaters_per_week: movie_data[:change_theaters_per_week],
+          per_theater_average_gross: movie_data[:per_theater_average_gross],
+          total_gross: movie_data[:total_gross],
+          weeks_in_release: movie_data[:weeks_in_release],
+          distributor: movie_data[:distributor]
+        )
+      end
+    end
+  end
+
+  # Method to save monthly data to the database
+  def self.save_monthly_data(movies_data, year, month)
+    movies_data.each do |movie_data|
+      movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
+
+      if movie
+        # Update movie record with TMDB data if necessary
+        tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
+        if tmdb_data
+          movie.update(
+            tmdb_id: tmdb_data[:tmdb_id],
+            title: tmdb_data[:title],
+            release_date: tmdb_data[:release_date],
+            budget: tmdb_data[:budget],
+            revenue: tmdb_data[:revenue],
+            poster_path: tmdb_data[:poster_path]
+          )
+        end
+
+        # Save or update monthly box office data
+        monthly_record = MonthlyBoxOffice.find_or_initialize_by(movie_id: movie.id, year: year, month: month)
+        monthly_record.update!(
+          rank: movie_data[:rank],
+          domestic_gross: movie_data[:domestic_gross],
+          total_theaters: movie_data[:total_theaters],
+          total_gross: movie_data[:total_gross],
+          release_date: movie_data[:release_date],
+          distributor: movie_data[:distributor]
+        )
       end
     end
   end

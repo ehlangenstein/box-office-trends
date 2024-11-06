@@ -32,4 +32,7 @@ gem 'wikidata-client'
 gem 'openai'
 
 
-gem 'whenever', require: false
+#gem 'whenever', require: false
+
+
+gem 'rufus-scheduler'
