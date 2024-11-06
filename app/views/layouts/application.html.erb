@@ -62,9 +62,11 @@
           <li class="nav-item">
             <%= link_to "Logged Movies", "/logged_movies", class: "nav-link #{'active' if current_page?(logged_movies_path)}" %>
           </li>
-          <li class="nav-item">
+
+          <li class="nav-item dropdown">
             <%= link_to "Top Companies", top_companies_companies_path, class: "nav-link #{'active' if current_page?(top_companies_companies_path)}" %>
           </li>
+
           <li class="nav-item">
             <%= link_to "Companies", "/companies", class: "nav-link #{'active' if current_page?(companies_path)}" %>
           </li>
