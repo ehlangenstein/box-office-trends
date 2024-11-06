@@ -1,0 +1,9 @@
+<!-- app/views/companies/top_companies_home.html.erb -->
+<h1>Top Companies to Track</h1>
+<ul>
+  <% @top_companies.each do |company| %>
+    <li>
+      <%= link_to company.company_name, company_path(company) %>
+    </li>
+  <% end %>
+</ul>

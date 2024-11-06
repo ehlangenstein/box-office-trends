@@ -1,0 +1,20 @@
+<!-- app/views/companies/show.html.erb -->
+<h1><%= @company.company_name %></h1>
+<% if @company.logo_path.present? %>
+  <%= image_tag "https://image.tmdb.org/t/p/w185#{@company.logo_path}", alt: @company.company_name %>
+<% end %>
+
+<h3>Company Details</h3>
+<p><strong>Name:</strong> <%= @company.company_name %></p>
+<p><strong>Company ID:</strong> <%= @company.company_id %></p>
+
+<h3>Movies Associated with <%= @company.company_name %></h3>
+<% if @movies.present? %>
+  <ul>
+    <% @movies.first(20).each do |movie| %>
+      <li><%= link_to movie["title"], movie_path(movie["id"]) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies are currently associated with this company.</p>
+<% end %>

@@ -1,0 +1,16 @@
+<!-- app/views/companies/top_show.html.erb -->
+<h1><%= @company.company_name %> (Top Company)</h1>
+<% if @company.logo_path.present? %>
+  <%= image_tag "https://image.tmdb.org/t/p/w185#{@company.logo_path}", alt: @company.company_name %>
+<% end %>
+
+<h3>Special Details for <%= @company.company_name %></h3>
+<!-- Add any special sections for top companies here -->
+<p>Company ID: <%= @company.company_id %></p>
+
+<h3>Top Company Movies</h3>
+<ul>
+  <% @company.movies.each do |movie| %>
+    <li><%= link_to movie.title, movie_path(movie.tmdb_id) %></li>
+  <% end %>
+</ul>

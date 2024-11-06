@@ -18,16 +18,19 @@ Rails.application.routes.draw do
 
   resources "movies", param: :tmdb_id, only: [:show] #view for individual movie data
 
-  resources "companies" do 
-    collection do 
-      get 'top_companies'
-      get 'search'
+  # companies Routes 
+  resources :companies, only: [:index, :show] do
+    collection do
+      get 'top_companies_home', to: 'companies#top_companies_home', as: 'top_companies_home'
+      get 'search', to: 'companies#search'
     end
-
+    
     member do
       post 'add_company'
     end
   end
+    # Top Companies Home page
+  get 'companies/top_companies_home', to: 'companies#top_companies_home', as: 'top_companies_home'
   
   # Login/logout
   get("/login", { :controller => "sessions", :action => "new" })
