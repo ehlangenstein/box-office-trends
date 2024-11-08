@@ -4,7 +4,41 @@
   <%= image_tag "https://image.tmdb.org/t/p/w185#{@company.logo_path}", alt: @company.company_name %>
 <% end %>
 
-<h3>Special Details for <%= @company.company_name %></h3>
+
+<h3>Yearly Revenue Trend</h3>
+<div id="yearlyRevenueChart"></div>
+<script>
+  const yearlyData = <%= @yearly_revenue_data.to_json.html_safe %>;
+  const yearKeys = Object.keys(yearlyData).map(d => +d);
+  const yearValues = Object.values(yearlyData);
+
+  // D3 chart setup
+  const margin = {top: 20, right: 30, bottom: 40, left: 50},
+        width = 500 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+  const svgYearly = d3.select("#yearlyRevenueChart")
+                     .append("svg")
+                     .attr("width", width + margin.left + margin.right)
+                     .attr("height", height + margin.top + margin.bottom)
+                     .append("g")
+                     .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const xYear = d3.scaleLinear().domain(d3.extent(yearKeys)).range([0, width]);
+  const yYear = d3.scaleLinear().domain([0, d3.max(yearValues)]).range([height, 0]);
+
+  svgYearly.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(xYear).ticks(yearKeys.length));
+  svgYearly.append("g").call(d3.axisLeft(yYear));
+
+  svgYearly.append("path")
+           .datum(Object.entries(yearlyData))
+           .attr("fill", "none")
+           .attr("stroke", "steelblue")
+           .attr("stroke-width", 1.5)
+           .attr("d", d3.line().x(d => xYear(d[0])).y(d => yYear(d[1])));
+</script>
+
+
 <!-- Add any special sections for top companies here -->
 <p>Company ID: <%= @company.company_id %></p>
 

@@ -1,7 +1,7 @@
 class WeeklyBoxOffice < ApplicationRecord
   # Associations
   belongs_to :movie
-
+  belongs_to :company, foreign_key: :distributor, primary_key: :company_name, optional: true
   # Validations
   validates :week_number, :year, :movie_id, presence: true
   validates :rank, :rank_last_week, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 200 }, allow_nil: true

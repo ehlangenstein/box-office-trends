@@ -1,6 +1,7 @@
 class MonthlyBoxOffice < ApplicationRecord
   # Associations
   belongs_to :movie
+  belongs_to :company, foreign_key: :distributor, primary_key: :company_name, optional: true
 
   # Validations
   validates :month, :year, :movie_id, presence: true

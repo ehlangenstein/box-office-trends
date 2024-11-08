@@ -1,18 +1,58 @@
 <h1>Home#index</h1>
 <p>Welcome!</p>
-
-
-<h1>Latest News from Deadline</h1>
-
+<h1 class="text-center my-4">Latest News</h1>
 <% if @rss_feed_items.any? %>
-  <ul>
-    <% @rss_feed_items.each do |item| %>
-      <li>
-        <a href="<%= item[:link] %>"><%= item[:title] %></a>
-        <p><%= item[:description] %></p>
-      </li>
+  <div class="accordion" id="newsAccordion">
+    <% ['Puck', 'Deadline', 'Deadline Box Office'].each do |source| %>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading<%= source.gsub(" ", "") %>">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= source.gsub(" ", "") %>" aria-expanded="false" aria-controls="collapse<%= source.gsub(" ", "") %>">
+            Latest News from <%= source %>
+          </button>
+        </h2>
+        <div id="collapse<%= source.gsub(" ", "") %>" class="accordion-collapse collapse" aria-labelledby="heading<%= source.gsub(" ", "") %>" data-bs-parent="#newsAccordion">
+          <div class="accordion-body">
+            <div class="container">
+              <div class="row">
+                <% @rss_feed_items.select { |item| item[:source] == source }.each do |item| %>
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                      <% if item[:image_url].present? %>
+                        <img src="<%= item[:image_url] %>" class="card-img-top" alt="<%= item[:title] %>">
+                      <% end %>
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <a href="<%= item[:link] %>" class="text-decoration-none" target="_blank">
+                            <%= item[:title].truncate(60) %>
+                          </a>
+                        </h5>
+                        <% if item[:pubDate].present? %>
+                          <p class="text-muted small mb-2">
+                            <%= item[:pubDate].strftime("%B %d, %Y") %>
+                          </p>
+                        <% end %>
+                        <p class="card-text">
+                          <%= item[:description].truncate(100) %>
+                        </p>
+                      </div>
+                      <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div>
+                          <% item[:categories]&.each do |category| %>
+                            <span class="badge bg-secondary"><%= category %></span>
+                          <% end %>
+                        </div>
+                        <a href="<%= item[:link] %>" class="btn btn-primary btn-sm" target="_blank">Read More</a>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% else %>
-  <p>No news available at the moment.</p>
+  <p class="text-center">No news available at the moment.</p>
 <% end %>

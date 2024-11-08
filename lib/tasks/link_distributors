@@ -1,0 +1,16 @@
+# lib/tasks/link_distributors.rake
+namespace :link_distributors do
+  desc "Link distributors in box office tables to company records based on company name"
+  task link: :environment do
+    # Example logic to match distributors with companies
+    YearlyBoxOffice.find_each do |record|
+      company = Company.find_by(company_name: record.distributor)
+      if company
+        record.update(company_id: company.id) # Assuming a company_id field exists
+        puts "Linked distributor #{record.distributor} to Company ID #{company.id}"
+      else
+        puts "No company found for distributor: #{record.distributor}"
+      end
+    end
+  end
+end

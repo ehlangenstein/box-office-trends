@@ -19,6 +19,7 @@ group :development do
 end
 
 
+
 #TMDB API
 gem 'themoviedb-api'
 

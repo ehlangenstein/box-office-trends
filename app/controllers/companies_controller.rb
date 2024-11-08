@@ -57,17 +57,13 @@ class CompaniesController < ApplicationController
     else
       render 'show'
     end
+
   end 
 
   def search
     if params[:query].present?
       search_companies_in_tmdb(params[:query])
     end
-  end
-
-  def top_companies
-    top_company_ids = [7, 41077, 14] # Replace with actual company IDs you want to track
-    @top_companies = Company.where(id: top_company_ids)
   end
 
   def add_company

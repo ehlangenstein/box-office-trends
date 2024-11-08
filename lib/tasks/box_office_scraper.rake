@@ -36,7 +36,7 @@ end
 namespace :box_office do
   desc "Scrape and save monthly box office data from 2010 to the current year"
   task scrape_monthly_data: :environment do
-    start_year = 2015
+    start_year = 2019
     #current_year = Time.now.year
     current_year = 2022
     (start_year..current_year).each do |year|

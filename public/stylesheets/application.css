@@ -34,3 +34,32 @@
 
   text-decoration: underline;
 }
+
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card .card-body {
+  padding: 1rem;
+}
+
+.card .card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card .text-success {
+  font-weight: bold;
+}
+
+.card .card-text.text-muted {
+  font-size: 0.9rem;
+}
+
+.card .bg-dark {
+  min-height: 200px;
+  text-align: center;
+  color: #fff;
+}

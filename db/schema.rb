@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_08_035957) do
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
     t.datetime "updated_at", null: false
     t.string "logo_path"
     t.boolean "is_top_company"
+    t.string "company_group"
   end
 
   create_table "credits", force: :cascade do |t|
@@ -79,6 +80,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
     t.integer "total_gross"
     t.date "release_date"
     t.string "distributor"
+    t.integer "company_id"
+    t.index ["company_id"], name: "index_monthly_box_offices_on_company_id"
     t.index ["movie_id"], name: "index_monthly_box_offices_on_movie_id"
   end
 
@@ -156,6 +159,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
     t.integer "total_gross"
     t.integer "weeks_in_release"
     t.string "distributor"
+    t.integer "company_id"
+    t.index ["company_id"], name: "index_weekly_box_offices_on_company_id"
     t.index ["movie_id"], name: "index_weekly_box_offices_on_movie_id"
   end
 
@@ -170,12 +175,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_010704) do
     t.integer "open_wknd_theaters"
     t.date "opening_weekend"
     t.string "distributor"
+    t.integer "company_id"
+    t.index ["company_id"], name: "index_yearly_box_offices_on_company_id"
     t.index ["movie_id"], name: "index_yearly_box_offices_on_movie_id"
   end
 
   add_foreign_key "credits", "movies"
   add_foreign_key "credits", "people"
+  add_foreign_key "monthly_box_offices", "companies"
   add_foreign_key "monthly_box_offices", "movies"
+  add_foreign_key "weekly_box_offices", "companies"
   add_foreign_key "weekly_box_offices", "movies"
+  add_foreign_key "yearly_box_offices", "companies"
   add_foreign_key "yearly_box_offices", "movies"
 end

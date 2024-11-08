@@ -1,6 +1,8 @@
 class YearlyBoxOffice < ApplicationRecord
   # Associations
   belongs_to :movie  # Assumes each yearly box office record is linked to a movie
+  belongs_to :company, foreign_key: :distributor, primary_key: :company_name, optional: true
+
   # Validations
   validates :year, presence: true
   validates :movie_id, presence: true
@@ -12,4 +14,6 @@ class YearlyBoxOffice < ApplicationRecord
   scope :by_year, ->(year) { where(year: year) }
   scope :top_ranked, ->(limit = 10) { order(rank: :asc).limit(limit) }
   scope :high_grossing, ->(threshold) { where("domestic_gross >= ?", threshold) }
+  scope :top_ranked_in_year, ->(year, limit = 10) { by_year(year).order(rank: :asc).limit(limit) }
+
 end
