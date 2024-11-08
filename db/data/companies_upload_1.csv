@@ -1,0 +1,195 @@
+﻿company_name,company_id,is_top_company
+Walt Disney Pictures,2,TRUE
+Walt Disney Studios Motion Pictures,2,TRUE
+Paramount Pictures,4,TRUE
+Columbia Pictures,5,FALSE
+DreamWorks,7,TRUE
+Fine Line Features,8,FALSE
+New Line Cinema,12,TRUE
+Miramax,14,TRUE
+Metro-Goldwyn-Mayer (MGM),21,TRUE
+Twentieth Century Fox,25,TRUE
+Newmarket Films,28,FALSE
+Universal Pictures,33,TRUE
+Orion Pictures,41,FALSE
+Fox Searchlight,43,FALSE
+Sony Pictures Classics,58,TRUE
+United Artists,60,FALSE
+Rogue Pictures,134,FALSE
+Warner Bros.,174,TRUE
+IFC Films,307,FALSE
+The Weinstein Company,308,FALSE
+THINKFilm,446,FALSE
+Summit Entertainment,491,FALSE
+Revolution Studios,497,FALSE
+Janus Films,533,FALSE
+TriStar Pictures,559,FALSE
+Christal Films,749,FALSE
+Destination Films,769,FALSE
+Paramount Vantage,838,FALSE
+Roadside Attractions,911,FALSE
+USA Films,987,FALSE
+Magnolia Pictures,1030,FALSE
+Viva Pictures,1034,FALSE
+Yash Raj Films,1569,FALSE
+Lionsgate,1632,TRUE
+Lionsgate Entertainment Corporation,1632,TRUE
+ATO Pictures,1962,FALSE
+Artisan Entertainment,2188,FALSE
+UTV Motion Pictures,2320,FALSE
+Cineville,2832,FALSE
+Fox Atomic,2890,FALSE
+Excel Entertainment,2934,FALSE
+Sony Pictures Releasing,3045,TRUE
+Cloud Ten Pictures,3226,FALSE
+Electric Entertainment,3241,FALSE
+Screen Gems,3287,TRUE
+IMAX,3447,FALSE
+Universal Home Video,3487,FALSE
+Studio 18,3747,FALSE
+Trimark Pictures,4063,FALSE
+Vivendi Entertainment,4575,FALSE
+Freestyle Releasing,4616,FALSE
+Oscilloscope,4748,FALSE
+3D Entertainment,5313,FALSE
+New Yorker Films,5448,FALSE
+CBS Films,5490,FALSE
+Giant Screen Films,5576,FALSE
+Universal Pictures International (UPI),5726,FALSE
+Anchor Bay Films,5860,FALSE
+Screen Media Films,6353,FALSE
+Pure Flix Entertainment,6427,FALSE
+Castle Hill Productions,6429,FALSE
+Film Movement,6685,FALSE
+EuropaCorp,6896,FALSE
+CJ Entertainment,7036,FALSE
+Eros Worldwide,7142,FALSE
+FilmDistrict,7263,FALSE
+Reliance Entertainment,7294,FALSE
+Relativity Media,7295,FALSE
+Dimension Films,7405,FALSE
+SK Films,7519,FALSE
+FIP,7552,FALSE
+Entertainment One,8147,FALSE
+LD Entertainment,8533,FALSE
+Pantelion Films,8573,FALSE
+Millennium Entertainment,8755,FALSE
+Yari Film Group Releasing,9037,FALSE
+Cohen Media Group,9122,FALSE
+The Orchard,9286,FALSE
+Focus Features,10146,TRUE
+Affirm Films,10156,FALSE
+Drafthouse Films,10485,FALSE
+First Look International,11054,FALSE
+Stage 6 Films,11341,TRUE
+Angel Studios,11350,FALSE
+Overture Films,12807,FALSE
+Shout! Factory,12852,FALSE
+The Bigger Picture,12979,FALSE
+Annapurna Pictures,13184,FALSE
+Capelight Pictures,14551,FALSE
+Warren Miller Entertainment,17183,FALSE
+Utopia,18066,FALSE
+Amazon Studios,20580,TRUE
+Amazon/MGM,20580,TRUE
+RADiUS-TWC,20671,FALSE
+Odeon,20678,FALSE
+Arc Entertainment,23703,FALSE
+IndustryWorks Pictures,24901,FALSE
+Regent Releasing,30613,FALSE
+Panorama Entertainment,31734,FALSE
+GKIDS,32853,FALSE
+Codeblack Entertainment,35327,FALSE
+Clarius Entertainment,36991,FALSE
+Kino Lorber,39134,FALSE
+EchoLight Studios,39281,FALSE
+Wellspring Media,39481,FALSE
+Cinelou Films,39644,FALSE
+Ketchup Entertainment,39734,FALSE
+A24,41077,TRUE
+Gravitas Ventures,44632,FALSE
+Broad Green Pictures,49389,FALSE
+Good Deed Entertainment,49937,FALSE
+Picturehouse,52005,FALSE
+Solstice Studios,52180,FALSE
+Heliograph Productions,53559,FALSE
+Chicago Pictures,59453,FALSE
+The Film Arcade,61901,FALSE
+Mongrel Media,64740,FALSE
+Rainbow Releasing,64862,FALSE
+Area 23a,68841,FALSE
+ArtAffects Entertainment,69088,FALSE
+Prime Media Pictures,70032,FALSE
+Providence Entertainment,72874,FALSE
+BH Tilt,73625,FALSE
+Shorts International,73718,FALSE
+Five & Two Pictures,74406,FALSE
+Saban Films,76992,FALSE
+Studio 8,77863,FALSE
+Kino International,81702,FALSE
+Zee Studios,86347,FALSE
+Vertical Entertainment,88606,FALSE
+Rhythm Boyz Entertainment,89924,FALSE
+Neon,90733,TRUE
+Well Go USA Entertainment,92394,FALSE
+Purdie Distribution,92440,FALSE
+CMC Pictures,92484,FALSE
+Abramorama,95417,FALSE
+Gunpowder & Sky,96654,FALSE
+Shadow Distribution,96693,FALSE
+Entertainment Studios Motion Pictures,97584,FALSE
+Crunchyroll,98553,FALSE
+Paramount Pictures International,100612,TRUE
+Aviron Pictures,102836,FALSE
+Adlabs Films,103209,FALSE
+Vital Pictures,104291,FALSE
+Blue Fox Entertainment,104292,FALSE
+Global Road Entertainment,104972,FALSE
+Zeitgeist Films,106082,FALSE
+D'Souza Media,107196,FALSE
+The H Collective,116562,FALSE
+truTV,121893,FALSE
+RLJE Films,123722,FALSE
+101 Studios,124254,FALSE
+Submarine Deluxe,125341,FALSE
+Sony BMG,126029,FALSE
+20th Century Studios,127928,TRUE
+Searchlight Pictures,127929,TRUE
+Zion Films,127995,FALSE
+Cloudburst Entertainment,132061,FALSE
+Atlas Distribution Company,133462,FALSE
+Pryor Entertainment,136052,FALSE
+MGM,136673,TRUE
+Quaker Media,138727,FALSE
+Trafalgar Releasing,139109,FALSE
+Mormon Movies,146360,FALSE
+Rialto Distribution,147314,FALSE
+Greenwich Entertainment,149326,FALSE
+Twenty First Century Entertainment,149488,TRUE
+Spanglish Movies,164782,FALSE
+Jetsen Huashi Media US,167299,FALSE
+Cinedigm Entertainment Group,168122,FALSE
+GathrFilms,168123,FALSE
+Iconic Events Releasing,176703,FALSE
+Power Point Films,178223,FALSE
+Netflix,178464,TRUE
+Hamsini Entertainment,181852,FALSE
+Menemsha Films,183961,FALSE
+UP2U Films,184416,FALSE
+The Avenue Entertainment,185127,FALSE
+Producers Distribution Agency,188115,FALSE
+Briarcliff Entertainment,191127,FALSE
+Zee TV,195361,FALSE
+Fin and Fur Films,199092,FALSE
+Quiver Distribution,202088,FALSE
+Soli Deo Gloria Releasing,202493,FALSE
+MUBI,204957,FALSE
+LAMA Entertainment,207280,FALSE
+Swapna Scarecrow,208617,FALSE
+Falling Forward Films,208732,FALSE
+Rainforest Films,211352,FALSE
+Paramount Classics,220287,TRUE
+Cowboy Pictures,220845,FALSE
+Flyhigh Cinemas,231422,FALSE
+Buena Vista International,232381,FALSE
+Cineverse,238902,FALSE

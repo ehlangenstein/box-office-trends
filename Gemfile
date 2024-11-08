@@ -36,3 +36,5 @@ gem 'openai'
 
 
 gem 'rufus-scheduler'
+
+gem 'rss'

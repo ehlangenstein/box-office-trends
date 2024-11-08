@@ -6,8 +6,6 @@ class CompaniesController < ApplicationController
   TMDB_API_URL = "https://api.themoviedb.org/3"
   TMDB_API_KEY = "a34e8adae9ec536dc53c3c325e782801"
 
-  # Define the list of top company IDs as a constant
-  TOP_COMPANY_IDS = [7, 41077, 14] # Replace with the actual company IDs you want to track
 
   # Top Companies Home Page
   def top_companies_home
@@ -51,7 +49,7 @@ class CompaniesController < ApplicationController
     #@movies = Movie.joins(:production_companies).where(production_companies: { prodco_id: @company.company_id }) 
     
     # Check if the company is a top company by matching with TOP_COMPANY_IDS
-    @is_top_company = TOP_COMPANY_IDS.include?(@company.company_id)
+    @is_top_company = @company.is_top_company
     Rails.logger.info "Is company #{@company.company_name} (ID #{@company.company_id}) a top company? #{@is_top_company}"
   
     if @is_top_company
@@ -137,7 +135,7 @@ class CompaniesController < ApplicationController
 
   # Fetch movies associated with a company from TMDB
   def fetch_movies_from_tmdb(company_id)
-      url = URI("#{TMDB_API_URL}/discover/movie?with_companies=#{company_id}&api_key=#{TMDB_API_KEY}&page=#{page}")
+      url = URI("#{TMDB_API_URL}/discover/movie?with_companies=#{company_id}&api_key=#{TMDB_API_KEY}&page=1")
 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true

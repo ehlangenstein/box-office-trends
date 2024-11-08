@@ -2,3 +2,17 @@
 <p>Welcome!</p>
 
 
+<h1>Latest News from Deadline</h1>
+
+<% if @rss_feed_items.any? %>
+  <ul>
+    <% @rss_feed_items.each do |item| %>
+      <li>
+        <a href="<%= item[:link] %>"><%= item[:title] %></a>
+        <p><%= item[:description] %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No news available at the moment.</p>
+<% end %>

@@ -9,8 +9,12 @@
 <p>Company ID: <%= @company.company_id %></p>
 
 <h3>Top Company Movies</h3>
-<ul>
-  <% @company.movies.each do |movie| %>
-    <li><%= link_to movie.title, movie_path(movie.tmdb_id) %></li>
-  <% end %>
-</ul>
+<% if @movies.present?%>
+  <ul>  
+    <% @movies.each do |movie| %>
+      <li><%= link_to movie['title'], movie_path(movie['id']) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies are currently associated with this top company.</p>
+<% end %>
