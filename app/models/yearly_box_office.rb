@@ -1,7 +1,7 @@
 class YearlyBoxOffice < ApplicationRecord
   # Associations
   belongs_to :movie  # Assumes each yearly box office record is linked to a movie
-  belongs_to :company, foreign_key: :distributor, primary_key: :company_name, optional: true
+  belongs_to :company, foreign_key: :company_id, primary_key: :company_id, optional: true
 
   # Validations
   validates :year, presence: true

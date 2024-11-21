@@ -18,11 +18,12 @@ end
 namespace :box_office do
   desc "Scrape and save weekly box office data from 2010 to the current year"
   task scrape_weekly_data: :environment do
-    start_year = 2010
-    current_year = Time.now.year
+    start_year = 2011
+    #current_year = Time.now.year
+    current_year = 2011
     
     (start_year..current_year).each do |year|
-      (1..52).each do |week_number|
+      (18..52).each do |week_number|
         Rails.logger.info "Scraping weekly box office data for year #{year}, week #{week_number}"
         movies_data = DomesticBomScraper.scrape_data(type: :weekly, year: year, week_number: week_number)
         DomesticBomScraper.save_weekly_data(movies_data, year, week_number)

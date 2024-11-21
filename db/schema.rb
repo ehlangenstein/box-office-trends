@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_08_035957) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_21_053512) do
   create_table "companies", force: :cascade do |t|
     t.integer "company_id"
     t.string "company_name"
@@ -32,6 +32,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_08_035957) do
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_credits_on_movie_id"
     t.index ["person_id"], name: "index_credits_on_person_id"
+  end
+
+  create_table "distributor_mappings", force: :cascade do |t|
+    t.string "distributor_name"
+    t.integer "company_id"
+    t.index ["distributor_name"], name: "index_distributor_mappings_on_distributor_name", unique: true
   end
 
   create_table "festival_awards", force: :cascade do |t|

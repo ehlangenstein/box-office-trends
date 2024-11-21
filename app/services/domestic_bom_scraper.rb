@@ -1,4 +1,5 @@
 # app/services/box_office_scraper.rb
+# 
 require 'nokogiri'
 require 'open-uri'
 
