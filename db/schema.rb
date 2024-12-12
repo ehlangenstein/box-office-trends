@@ -126,7 +126,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_21_053512) do
     t.string "distributor"
     t.integer "widest_release_theaters"
     t.integer "wikidata_id"
-  end
+  end 
 
   create_table "people", force: :cascade do |t|
     t.integer "person_id"

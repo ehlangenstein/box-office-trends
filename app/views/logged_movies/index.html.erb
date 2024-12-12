@@ -23,14 +23,14 @@
       <th>RT Critics Score</th>
       <th>RT Audience Score</th>
       <th>Logged</th>
-      <th>Edit</th>
+
     </tr>
   </thead>
 
   <tbody>
     <%for movie in @logged_movies%>
       <tr>
-        <td> <%= movie["title"] %> </td>
+        <td> <%= link_to movie["title"], movie_path(movie.tmdb_id) %> </td>
        
         <%#Look up genre name using primary_genre id%>
         <td>
@@ -54,7 +54,7 @@
         <td> <%= number_to_percentage(movie["RT_critic"] * 100, precision: 0) if movie["RT_critic"] %> </td>
         <td> <%= number_to_percentage(movie["RT_audience"] * 100, precision: 0) if movie["RT_audience"] %> </td>
         <td> <%= movie["logged"]%> </td>
-        <td>  <%= link_to 'Edit', edit_logged_movie_path(tmdb_id: movie.tmdb_id), class: 'btn btn-primary' %> </td> 
+        
       </tr>
     <%end%>
   </tbody>
