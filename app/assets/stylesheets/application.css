@@ -64,3 +64,9 @@
 .movie-credits {
   margin-top: 20px;
 }
+
+/* Background Color */
+body {
+  background-color: #F5EFE7; /* Lightest background color */
+  color: #3E5879; /* Default text color for contrast */
+}

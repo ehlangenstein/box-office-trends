@@ -1,10 +1,13 @@
 class MoviesController < ApplicationController
   def show
     @movie = Movie.find_by(tmdb_id: params[:tmdb_id])
-    # Fetch actors (credits with a character)
-    #@actors = @movie.credits.joins(:person).where.not(character: nil).order(:order)
+
+    # Fetch TMDB details if needed
+    tmdb_details = TmdbMovieService.fetch_movie_details(@movie.tmdb_id)
+
+    # Extract the backdrop path
+    @backdrop_path = tmdb_details["backdrop_path"] if tmdb_details
     
-    # Fetch other credits (Writing, Directing, Production)
-    #@credits = @movie.credits.joins(:person).where(character: nil)
+
   end
 end

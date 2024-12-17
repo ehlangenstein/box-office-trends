@@ -1,3 +1,23 @@
+<% if @backdrop_path.present? %>
+  <div style="
+    background-image: url('https://image.tmdb.org/t/p/w1280<%= @backdrop_path %>');
+    background-size: cover;
+    background-position: center;
+    height: 300px; 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  ">
+    <h1 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+      <%= @movie.title %>
+    </h1>
+  </div>
+<% else %>
+<% end %>
+
+
+
 <h1><%= @movie.title %></h1>
 <% if @movie.poster_path.present? %>
   <%= image_tag "https://image.tmdb.org/t/p/w185#{@movie.poster_path}", alt: @movie.title, class: "img-fluid" %>
@@ -36,17 +56,10 @@
     <th>Opening Weekend # of Theaters</th>
     <td><%= @movie.open_wknd_theaters %></td>
   </tr>
-  <tr>
-    <th>TMDB ID</th>
-    <td><%= @movie.tmdb_id %></td>
-  </tr>
-  <tr>
-    <th>IMDB ID</th>
-    <td><%= @movie.imdb_id %></td>
-  </tr>
+
   <tr>
     <th>Domestic Distributor</th>
-    <td></td>
+    <td><%= @movie.distributor %></td>
   </tr>
   
 </table>

@@ -1,18 +1,24 @@
 .blog-title {
   font-family: 'Playfair Display', serif;
 }
-
-/* Top Bar Styling */
-.top-bar {
-  font-size:0.9rem;
-  color: #25282b;
+/* Background Color */
+body {
+  background-color: #F5EFE7 !important; /* Lightest background color */
+  color: #3E5879; /* Default text color for contrast */
+  font-family: 'Playfair Display', serif;
 }
 
-/* Logo Styling */
-.logo {
+/* Top Bar Styling */
+.custom-navbar {
+  font-size:0.9rem;
+  background-color: #213555; /* Dark blue for navbar */
+  color: #3E5879;
+}
+
+.navbar-brand {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: bold;
+  color: #F5EFE7;
+  font-weight: normal;
 }
 
 /* Centered Navigation Styling */
@@ -22,7 +28,7 @@
 
 .nav-link {
   font-family: 'Playfair Display', serif;
-  color: #e23d3dca;
+  color: #F5EFE7;
   font-weight: normal;
   text-decoration: none;
   padding: 0.5rem 1rem;
@@ -31,10 +37,21 @@
 .nav-link:hover,
 .nav-link.active {
   font-weight: bold;
-
   text-decoration: underline;
+  color: #D8C4B6;
+}
+/* Buttons */
+.btn-primary {
+  background-color: #3E5879; /* Medium blue for buttons */
+  border-color: #3E5879;
 }
 
+.btn-primary:hover {
+  background-color: #213555; /* Dark blue on hover */
+  border-color: #213555;
+}
+
+/* Card or Section Highlights */
 .card {
   border-radius: 8px;
   overflow: hidden;
@@ -62,4 +79,19 @@
   min-height: 200px;
   text-align: center;
   color: #fff;
+}
+
+/* custom footer */
+.custom-footer {
+  font-family: 'Playfair Display', serif;
+  color: #3E5879;
+  background-color: #3E5879 !important; /* Lightest background color */
+}
+
+/* Logo Styling */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #D8C4B6;
 }
