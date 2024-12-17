@@ -88,7 +88,12 @@ class TmdbLoggedMovieService
         m.release_date = movie_data["release_date"]
         m.revenue = movie_data["revenue"]
         m.poster_path = movie_data["poster_path"]
-        m.wikidata_id = wikidata_id
+      end
+      
+      # Explicitly update the wikidata_id, as find_or_create_by won't update it outside the block
+      if movie.wikidata_id.blank? && wikidata_id.present?
+        movie.update(wikidata_id: wikidata_id)
+        Rails.logger.info "Updated Wikidata ID for movie #{movie.title} to #{wikidata_id}"
       end
 
       if movie.persisted?

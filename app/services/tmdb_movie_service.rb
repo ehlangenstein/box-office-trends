@@ -42,6 +42,9 @@ class TmdbMovieService
 
     response = http.request(request)
     parsed_response = JSON.parse(response.body)
+    puts "Parsed Response:"
+    puts parsed_response
+
 
     # Extract detailed information
     {
@@ -53,7 +56,8 @@ class TmdbMovieService
       poster_path: parsed_response['poster_path'],
       runtime: parsed_response['runtime'],
       genres: parsed_response['genres'].map { |genre| genre['name'] },
-      overview: parsed_response['overview']
+      overview: parsed_response['overview'],
+      backdrop_path: parsed_response['backdrop_path']
     }
   rescue StandardError => e
     Rails.logger.error "Error fetching movie details for TMDB ID #{tmdb_id}: #{e.message}"

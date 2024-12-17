@@ -4,10 +4,10 @@ require 'json'
 
 class TmdbWikidataService
   TMDB_API_URL = "https://api.themoviedb.org/3"
-  TMDB_API_KEY = "your_tmdb_api_key"
+  TMDB_API_KEY = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzRlOGFkYWU5ZWM1MzZkYzUzYzNjMzI1ZTc4MjgwMSIsIm5iZiI6MTcyODMzMDE4OC4xMzc1NTUsInN1YiI6IjY2ZjQ3Y2ExZjViNDk3ODY0MzIzMjUwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9zgr_Qw-b4zKf1LuPS8oecGG1usxsqEXWf2HQzkD-yk"
 
   # Fetch the movie data from TMDB by using the Wikidata ID
-  def self.fetch_movie_from_wikidata_id(wikidata_id)
+  def self.find_wikidata_id(wikidata_id)
     tmdb_url = "#{TMDB_API_URL}/find/#{wikidata_id}?external_source=wikidata_id&api_key=#{TMDB_API_KEY}"
     uri = URI(tmdb_url)
 

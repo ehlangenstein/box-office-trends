@@ -7,17 +7,20 @@ namespace :export do
   desc "Export movies data to CSV"
   task movies_to_csv: :environment do
     CSV.open("exports/movies/movies_#{Time.now.strftime('%Y%m%d_%H%M%S')}.csv", "w") do |csv|
-      csv << ["TMDB ID", "Title", "Budget", "IMDB ID", "Release Date", "Revenue", "Primary Genre", 
+      csv << ["ID", "TMDB ID", "Wikidata ID","IMDB ID", "Title", "Budget",  "Release Date", "Revenue", "Primary Genre", 
               "Opening Weekend Theaters", "Opening Weekend BO", "Domestic BO", "International BO", 
               "Total BO", "RT Audience", "RT Critic", "Domestic Distributor", "International Distributor", 
-              "Director", "Logged", "Poster Path", "Distributor", "Widest Release Theaters", "Wikidata ID"]
+              "Director", "Logged", "Poster Path", "Distributor", "Widest Release Theaters"]
+
 
       Movie.find_each do |movie|
         csv << [
+          movie.id,
           movie.tmdb_id,
+          movie.wikidata_id,
+          movie.imdb_id,
           movie.title,
           movie.budget,
-          movie.imdb_id,
           movie.release_date,
           movie.revenue,
           movie.primary_genre,
@@ -34,8 +37,7 @@ namespace :export do
           movie.logged,
           movie.poster_path,
           movie.distributor,
-          movie.widest_release_theaters,
-          movie.wikidata_id
+          movie.widest_release_theaters
         ]
       end
     end

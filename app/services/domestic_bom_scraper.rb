@@ -146,7 +146,6 @@ class DomesticBomScraper
   end
 
   # Scrape yearly box office data with release type filter
-
   #later need to pull data for only in month releases vs gross calendar - currently does calendar grosses 
   def self.scrape_year(year, release_scale = :all)
     release_scale=release_scale.to_sym
@@ -192,7 +191,7 @@ class DomesticBomScraper
       movies << movie
     end
 
-    save_yearly_data(movies)
+    movies
   end
 
 
@@ -268,20 +267,34 @@ class DomesticBomScraper
       movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
       
       if movie
-
+        additional_data = BoxOfficeMojoService.fetch_and_store_box_office_data(movie_data[:imdb_id])
         tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
 
-      # Update movie record with fetched TMDB data
-      if tmdb_data
-        movie.update(
-          tmdb_id: tmdb_data[:tmdb_id],
-          title: tmdb_data[:title],
-          release_date: tmdb_data[:release_date],
-          budget: tmdb_data[:budget],
-          revenue: tmdb_data[:revenue],
-          poster_path: tmdb_data[:poster_path]
-        )
-      end
+        # Update movie record with fetched TMDB data
+        if tmdb_data
+          movie.update(
+            tmdb_id: tmdb_data[:tmdb_id],
+            title: tmdb_data[:title],
+            release_date: tmdb_data[:release_date],
+            budget: tmdb_data[:budget],
+            revenue: tmdb_data[:revenue],
+            poster_path: tmdb_data[:poster_path]
+          )
+        end
+        
+        #Update with Box Office data - summary
+        if additional_data
+          movie.update(
+            # New fields from BoxOfficeMojoService
+            domestic_BO: additional_data[:domestic_box_office],
+            intl_BO: additional_data[:international_box_office],
+            total_BO: additional_data[:worldwide_box_office],
+            distributor: additional_data[:distributor],
+            open_wknd_BO: additional_data[:opening_weekend_box_office],
+            open_wknd_theaters: additional_data[:opening_theaters],
+            widest_release_theaters: additional_data[:widest_release]
+          )
+        end
         # Check if a record for this movie and year already exists
         yearly_record = YearlyBoxOffice.find_or_initialize_by(movie_id: movie.id, year: movie_data[:year])
          Rails.logger.debug "Saving yearly box office data for #{movie.title} (Year: #{movie_data[:year]})"
@@ -307,6 +320,7 @@ class DomesticBomScraper
       movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
 
       if movie
+        additional_data = BoxOfficeMojoService.fetch_and_store_box_office_data(movie_data[:imdb_id])
         # Update movie record with TMDB data if necessary
         tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
         if tmdb_data
@@ -317,6 +331,20 @@ class DomesticBomScraper
             budget: tmdb_data[:budget],
             revenue: tmdb_data[:revenue],
             poster_path: tmdb_data[:poster_path]
+          )
+        end
+
+        #Update with Box Office data - summary
+        if additional_data
+          movie.update(
+            # New fields from BoxOfficeMojoService
+            domestic_BO: additional_data[:domestic_box_office],
+            intl_BO: additional_data[:international_box_office],
+            total_BO: additional_data[:worldwide_box_office],
+            distributor: additional_data[:distributor],
+            open_wknd_BO: additional_data[:opening_weekend_box_office],
+            open_wknd_theaters: additional_data[:opening_theaters],
+            widest_release_theaters: additional_data[:widest_release]
           )
         end
 
@@ -342,6 +370,7 @@ class DomesticBomScraper
       movie = Movie.find_or_create_by(imdb_id: movie_data[:imdb_id])
 
       if movie
+        additional_data = BoxOfficeMojoService.fetch_and_store_box_office_data(movie_data[:imdb_id])
         # Update movie record with TMDB data if necessary
         tmdb_data = TmdbMovieService.fetch_movie_by_imdb_id(movie_data[:imdb_id])
         if tmdb_data
@@ -352,6 +381,20 @@ class DomesticBomScraper
             budget: tmdb_data[:budget],
             revenue: tmdb_data[:revenue],
             poster_path: tmdb_data[:poster_path]
+          )
+        end
+
+        #Update with Box Office data - summary
+        if additional_data
+          movie.update(
+            # New fields from BoxOfficeMojoService
+            domestic_BO: additional_data[:domestic_box_office],
+            intl_BO: additional_data[:international_box_office],
+            total_BO: additional_data[:worldwide_box_office],
+            distributor: additional_data[:distributor],
+            open_wknd_BO: additional_data[:opening_weekend_box_office],
+            open_wknd_theaters: additional_data[:opening_theaters],
+            widest_release_theaters: additional_data[:widest_release]
           )
         end
 
